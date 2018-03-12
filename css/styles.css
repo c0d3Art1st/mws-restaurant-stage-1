@@ -124,12 +124,12 @@ nav h1 a {
 
 .filter-options select {
   background-color: white;
-  border: 1px solid #fff;
+  border: none;
   font-family: Arial,sans-serif;
   font-size: 11pt;
   height: 48px;
   letter-spacing: 0;
-  margin: 10px 40px 10px 0;
+  margin: 10px 0 10px 0;
   padding: 0 10px;
   width: 100%;
   border-radius: 8px;
