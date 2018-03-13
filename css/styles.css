@@ -3,6 +3,7 @@
 
 * {
 	box-sizing: border-box;
+	/* border: 1px solid red; */
 }
 
 body,td,th,p{
@@ -140,19 +141,19 @@ nav h1 a {
   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
-  padding: 30px 10px 60px;
+  padding: 10px;
   text-align: center;
 }
 #restaurants-list li {
   background-color: #fff;
   font-family: Arial,sans-serif;
-  margin: 15px;
+  margin: 15px 0;
   min-height: 380px;
   padding: 0;
   text-align: left;
   width: 100%;
-  box-shadow: 0px 2px 3px 1px #ccc;
-  border-radius: 15px 0 0 0;
+  box-shadow: 0px 2px 2px 1px #ccc;
+  border-radius: 15px 0 15px 0;
 }
 
 #restaurants-list li div {
