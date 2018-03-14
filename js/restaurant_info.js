@@ -79,16 +79,34 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
       const row = document.createElement('tr');
 
       const day = document.createElement('td');
+      day.classList.add("week-day");
       day.innerHTML = key;
       row.appendChild(day);
 
       const time = document.createElement('td');
-      time.innerHTML = operatingHours[key];
+      time.innerHTML = processMultilineHours(operatingHours[key]);
       row.appendChild(time);
 
       hours.appendChild(row);
    }
 }
+
+processMultilineHours = (hours) => {
+   console.log("test");
+   let hoursString  = "";
+   let openingHoursDivider = hours.indexOf(',');
+   console.log(hours);
+   console.log(openingHoursDivider);
+   if (openingHoursDivider !== -1) {
+      hoursString += hours.substr(0, openingHoursDivider) + "<br>";
+      hoursString += hours.substr(openingHoursDivider + 2);
+   } else {
+      hoursString = "\t" + hours;
+   }
+   console.
+   log(hoursString);
+   return hoursString;
+};
 
 /**
  * Create all reviews HTML and add them to the webpage.
@@ -149,6 +167,7 @@ createReviewHTML = (review) => {
 
    return li;
 }
+
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
