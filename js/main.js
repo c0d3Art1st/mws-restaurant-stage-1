@@ -144,7 +144,6 @@ createRestaurantHTML = (restaurant) => {
   li.append(image);
 
   const infoBody = document.createElement('div');
-  infoBody.classList.add(".restaurant-info-body");
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
