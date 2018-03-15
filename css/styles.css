@@ -398,6 +398,10 @@ nav h1 a {
 }
 
 @media screen and (min-width: 801px) {
+   nav {
+      height: 80px;
+   }
+
    #maincontent {
       display: flex;
       flex-wrap: nowrap;
@@ -408,19 +412,36 @@ nav h1 a {
    }
 
    .filter-options {
-      height: 150px;
+      height: 125px;
+      position: relative;
+      z-index: 1000;
+      box-shadow: 0px 2px 2px #ccc;
+   }
+
+   .filter-options::before {
+      position: absolute;
+      content: "Filter Results";
+      top: -20px;
+      left: calc(50% - 58px);
+      color: white;
+      padding: 5px 15px 0 15px;
+      background: #3397DB;
+      border-radius: 15px 15px 0 0;
+   }
+
+   .filter-options h2 {
+      margin: 0;
    }
 
    .filter-options select {
       display: block;
-      margin: 10px 0;
+      margin: 0 0 10px 0;
       width: calc(100% - 10px);
    }
 
    #restaurants-list {
       overflow: auto;
-      height: calc(100vh - 180px);
-      overflow: auto;
+      height: calc(100vh - 205px);
       padding: 10px;
    }
 
@@ -435,22 +456,66 @@ nav h1 a {
    }
 
    #map {
-      height: calc(100vh - 30px);
+      height: calc(100vh - 80px)
    }
 }
 
-@media screen and (min-width: 1001px) {
+@media screen and (min-width: 951px) {
+   #map-container {
+      width: 50%;
+   }
+
+   #info-container {
+      width: 50%;
+   }
+
    .filter-options {
-      height: 100px;
+      height: 70px;
    }
 
    .filter-options select {
       display: inline-block;
-      margin: 10px 10px 10px 0;
-      width: calc(50% - 10px);
+      margin: 0px 10px 10px 0;
+      width: calc(50% - 8px);
    }
 
    .filter-options select:last-of-type {
-      margin: 10px 0;
+      margin: 0;
+   }
+
+   #restaurants-list {
+      overflow: auto;
+      height: calc(100vh - 150px);
+      padding: 10px;
+   }
+
+   #restaurants-list li {
+		width: calc(50% - 10px);
+		margin: 0 20px 20px 0;
+	}
+	#restaurants-list li:nth-child(even) {
+		margin: 0 0 20px 0;
+	}
+
+   #restaurants-list .restaurant-img {
+      min-height: 150px;
+   }
+
+}
+
+
+@media screen and (min-width: 1101px) {
+
+
+
+}
+
+@media screen and (min-width: 1401px) {
+   #map-container {
+      width: 65%;
+   }
+
+   #info-container {
+      width: 35%;
    }
 }
