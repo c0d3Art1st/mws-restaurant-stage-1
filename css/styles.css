@@ -61,6 +61,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
    padding: 25px;
    text-align: center;
    text-transform: uppercase;
+   height: 70px;
 }
 
 /* ====================== Navigation ====================== */
@@ -141,10 +142,10 @@ nav h1 a {
 
 .filter-options h2 {
    color: white;
-   font-size: 1rem;
+   font-size: 0.9rem;
    font-weight: normal;
    line-height: 1;
-   margin: 0;
+   margin: 0 0 0 12px;
 }
 
 .filter-options select {
@@ -393,5 +394,63 @@ nav h1 a {
       width: calc(50% - 20px);
       display: inline-block;
       margin: 10px 0px 10px 12px;
+   }
+}
+
+@media screen and (min-width: 801px) {
+   #maincontent {
+      display: flex;
+      flex-wrap: nowrap;
+   }
+   #info-container {
+      width: 37%;
+      order: 0;
+   }
+
+   .filter-options {
+      height: 150px;
+   }
+
+   .filter-options select {
+      display: block;
+      margin: 10px 0;
+      width: calc(100% - 10px);
+   }
+
+   #restaurants-list {
+      overflow: auto;
+      height: calc(100vh - 180px);
+      overflow: auto;
+      padding: 10px;
+   }
+
+   #restaurants-list li {
+		width: 100%;
+		margin: 0 0px 20px 0;
+	}
+
+   #map-container {
+      width:63%;
+      order: 1;
+   }
+
+   #map {
+      height: calc(100vh - 30px);
+   }
+}
+
+@media screen and (min-width: 1001px) {
+   .filter-options {
+      height: 100px;
+   }
+
+   .filter-options select {
+      display: inline-block;
+      margin: 10px 10px 10px 0;
+      width: calc(50% - 10px);
+   }
+
+   .filter-options select:last-of-type {
+      margin: 10px 0;
    }
 }
