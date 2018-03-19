@@ -65,6 +65,13 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 /* ====================== Navigation ====================== */
+header {
+   position: fixed;
+   top: 0;
+   width: 100%;
+   z-index: 1000;
+   box-shadow: 0px 1px 2px #777;
+}
 
 nav {
    width: 100%;
@@ -126,6 +133,10 @@ nav h1 a {
 
 .inside #breadcrumb {
    box-shadow: 0px 2px 2px #ddd;
+}
+
+#maincontent {
+   margin-top: 80px;
 }
 
 /* ====================== Map ====================== */
@@ -445,20 +456,21 @@ nav h1 a {
    .filter-options {
       height: 125px;
       position: relative;
-      z-index: 1000;
-      box-shadow: 0px 2px 2px #ddd;
+      z-index: 990;
+      box-shadow: 0px 2px 1px #ddd;
    }
 
-   .filter-options::before {
+   /* .filter-options::before {
       position: absolute;
       content: "Filter Results";
       top: -20px;
       left: calc(50% - 58px);
       color: white;
+      z-index: 1002;
       padding: 5px 15px 0 15px;
       background: #3397DB;
       border-radius: 15px 15px 0 0;
-   }
+   } */
 
    .filter-options h2 {
       margin: 0;
