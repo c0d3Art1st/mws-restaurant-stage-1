@@ -532,10 +532,10 @@ nav h1 a {
    /*############## Restaurant Details ##################*/
    .inside #info-container {
       order: 0;
-      width: 50%;
-      margin: 0;
-      height: calc(100vh - 60px);
+      width:37%;
+      margin-bottom: 70px;
       overflow: auto;
+      height: calc(100vh - 130px);
    }
 
    #restaurant-name {
@@ -552,7 +552,7 @@ nav h1 a {
 
    .inside #map-container {
       order: 1;
-      width: calc(50%);
+      width: 63%;
       margin: 0;
    }
 
@@ -624,18 +624,30 @@ nav h1 a {
    /*############## Restaurant Details ##################*/
 
    .inside #info-container {
-      width: 40%;
+      width: 50%;
    }
    .inside #map-container {
-      width: calc(60%);
+      width: 50%;
    }
 }
 
+@media screen and (min-width: 1201px) {
+   #restaurant-container {
+      display: flex;
+      flex-wrap: wrap;
+   }
+   #restaurant-name {
+      width: 100%;
+   }
 
-@media screen and (min-width: 1101px) {
+   #restaurant-img-area {
+      width: 50%;
+      margin-bottom: 20px;
+   }
 
-
-
+   #restaurant-info-area {
+      width: 50%;
+   }
 }
 
 @media screen and (min-width: 1401px) {
@@ -646,17 +658,15 @@ nav h1 a {
    #info-container {
       width: 35%;
    }
+}
 
+@media screen and (min-width: 1650px) {
    .inside #info-container {
       width: 35%;
    }
    .inside #map-container {
-      width: calc(65%);
+      width: 65%;
    }
-
-}
-
-@media screen and (min-width: 1650px) {
    #restaurant-container {
       display: flex;
       flex-wrap: wrap;
@@ -674,5 +684,4 @@ nav h1 a {
    #restaurant-info-area {
       width: 50%;
    }
-
 }
