@@ -132,7 +132,7 @@ nav h1 a {
 }
 
 .inside #breadcrumb {
-   box-shadow: 0px 1px 2px #ddd;
+   box-shadow: 0px 1px 3px #dedede;
 }
 
 #maincontent {
@@ -286,7 +286,7 @@ nav h1 a {
    font-size: 20pt;
    font-weight: 200;
    letter-spacing: 0;
-   margin: 15px 0 30px;
+   margin: 0 0 20px 0;
    text-transform: uppercase;
    line-height: 1.1;
 }
@@ -337,7 +337,7 @@ nav h1 a {
 }
 
 #reviews-container {
-   padding: 30px 20px 80px 20px;
+   padding: 20px 20px 80px 20px;
 }
 
 #reviews-container h2 {
@@ -407,6 +407,12 @@ nav h1 a {
 }
 
 @media screen and (min-width: 591px) {
+
+   #info-container {
+      position: relative;
+      box-shadow: 2px 0px 3px #bbb;
+   }
+
 	#restaurants-list li {
 		width: calc(50% - 10px);
 		margin: 0 20px 20px 0;
@@ -457,6 +463,10 @@ nav h1 a {
 @media screen and (min-width: 801px) {
    nav {
       height: 80px;
+   }
+
+   nav h1 a {
+      font-size: 1.1rem;
    }
 
    #maincontent {
