@@ -138,6 +138,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
    const li = document.createElement('li');
    const card = document.createElement('article');
+   card.setAttribute("aria-label", restaurant.name);
 
    const picture = document.createElement('picture');
    const source = document.createElement('source');
