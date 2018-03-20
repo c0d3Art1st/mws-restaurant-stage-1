@@ -137,6 +137,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
    const li = document.createElement('li');
+   const card = document.createElement('article');
 
    const picture = document.createElement('picture');
    const source = document.createElement('source');
@@ -156,7 +157,7 @@ createRestaurantHTML = (restaurant) => {
    image.setAttribute("alt", restaurant.photograph_alt);
    picture.append(image);
 
-   li.append(picture);
+   card.append(picture);
 
    const infoBody = document.createElement('div');
 
@@ -179,7 +180,8 @@ createRestaurantHTML = (restaurant) => {
    more.setAttribute("aria-label", `${restaurant.name} - View Details`);
    infoBody.append(more)
 
-   li.append(infoBody);
+   card.append(infoBody);
+   li.append(card);
 
    return li;
 }
