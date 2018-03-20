@@ -65,6 +65,21 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 /* ====================== Navigation ====================== */
+.skip-link {
+   position: absolute;
+   top: -30px;
+   left: 0;
+   color: white;
+   background: #444;
+   z-index: 1100;
+   padding: 3px 5px;
+   border-radius: 0 0 5px 0;
+}
+
+.skip-link:focus {
+   top: 0;
+}
+
 header {
    position: fixed;
    top: 0;

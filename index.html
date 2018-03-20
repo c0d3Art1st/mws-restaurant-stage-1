@@ -2,7 +2,7 @@
 <html>
 
 <head>
-   <title>Restaurant Reviews</title>
+   <title>Restaurant Reviews: We speak the good food language!</title>
 
    <meta charset="UTF-8" />
    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,14 +17,18 @@
 </head>
 
 <body>
+
    <header>
+      <a href="#neighborhoods-select" class="skip-link">Skip to Restaurant filter</a>
       <nav>
-         <h1><a href="/">Restaurant Reviews</a></h1>
+         <h1><a href="/">Restaurant Reviews </a></h1>
       </nav>
    </header>
 
    <main id="maincontent">
-
+      <section id="map-container">
+         <div id="map"></div>
+      </section>
       <section id="info-container">
          <div class="filter-options">
             <!-- <h2>Filter Results</h2> -->
@@ -44,9 +48,6 @@
            </select>
          </div>
          <ul id="restaurants-list"></ul>
-      </section>
-      <section id="map-container">
-         <div id="map"></div>
       </section>
    </main>
 
