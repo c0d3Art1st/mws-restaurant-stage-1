@@ -51,9 +51,11 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
    const name = document.getElementById('restaurant-name');
    name.innerHTML = restaurant.name;
+   name.setAttribute("aria-label", `${restaurant.name} - info section`)
 
    const image = document.getElementById('restaurant-img');
    image.className = 'restaurant-img'
+   image.setAttribute("alt", restaurant.photograph_alt);
    image.src = DBHelper.imageUrlForRestaurant(restaurant);
 
    const cuisine = document.getElementById('restaurant-cuisine');
@@ -92,7 +94,6 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 }
 
 processMultilineHours = (hours) => {
-   console.log("test");
    let hoursString  = "";
    let openingHoursDivider = hours.indexOf(',');
    console.log(hours);
@@ -115,6 +116,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
    const container = document.getElementById('reviews-container');
    const title = document.createElement('h2');
    title.innerHTML = 'Reviews';
+   title.setAttribute("aria-label", `Reviews for restaurant ${self.restaurant.name}`)
    container.appendChild(title);
 
    if (!reviews) {
