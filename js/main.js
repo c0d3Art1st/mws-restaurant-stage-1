@@ -129,7 +129,20 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
    restaurants.forEach(restaurant => {
       ul.append(createRestaurantHTML(restaurant));
    });
+
+   if(restaurants.length === 0) {
+      ul.append(createEmptyMessage());
+   }
    addMarkersToMap();
+}
+
+createEmptyMessage = () => {
+   const li = document.createElement("li");
+   li.style.width = "100%";
+   const emptyMessage = document.createElement("p");
+   emptyMessage.innerHTML = "No restaurants available. Please try a different area or type of cuisine.";
+   li.append(emptyMessage);
+   return li;
 }
 
 /**
