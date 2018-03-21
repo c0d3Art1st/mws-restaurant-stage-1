@@ -5,6 +5,7 @@ const DYN_CACHE_NAME = "dynamic-v1";
 let staticFiles = [
    "/",
    "/index.html",
+   "/offline.html",
    "/css/styles.css",
    "/js/app.js",
    "/js/dbhelper.js",
@@ -37,15 +38,20 @@ self.addEventListener('fetch', event => {
 			.then(res => {
 				return caches.open(DYN_CACHE_NAME)
 				.then(cache => {
-					// store clone in cache and return response
 					cache.put(event.request.url, res.clone());
 					return res;
-				})
-				.catch(err => {
-					// log error or return offline fallback page
-               console.log("#ERROR# [ServiceWorker] Error while caching dynamic files: ", err);
 				});
-			});
+			})
+         .catch(err => {
+            return caches.open(STATIC_CACHE_NAME)
+            .then(cache => {
+               if (event.request.headers.get('accept').includes('text/html')) {
+                  return cache.match('/offline.html');
+               } else {
+                  console.log("#ERROR# [ServiceWorker] Error while caching dynamic files: ", err);
+               }
+            });
+         });
 		})
 	);
 });

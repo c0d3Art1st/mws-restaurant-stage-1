@@ -53,6 +53,17 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
    min-height: 100%;
 }
 
+.offline {
+   text-align: center;
+}
+
+.offline h2 {
+   padding: 50px 0 0 0;
+}
+.offline p {
+   padding: 0 0 50px 0;
+}
+
 #footer {
    background-color: #444;
    color: #aaa;
