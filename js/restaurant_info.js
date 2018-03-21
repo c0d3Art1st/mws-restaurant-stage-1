@@ -96,16 +96,12 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 processMultilineHours = (hours) => {
    let hoursString  = "";
    let openingHoursDivider = hours.indexOf(',');
-   console.log(hours);
-   console.log(openingHoursDivider);
    if (openingHoursDivider !== -1) {
       hoursString += hours.substr(0, openingHoursDivider) + "<br>";
       hoursString += hours.substr(openingHoursDivider + 2);
    } else {
       hoursString = "\t" + hours;
    }
-   console.
-   log(hoursString);
    return hoursString;
 };
 
