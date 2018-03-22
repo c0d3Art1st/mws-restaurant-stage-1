@@ -59,6 +59,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 
 .offline h2 {
    padding: 50px 0 0 0;
+   width: 100%;
 }
 .offline p {
    padding: 0 0 50px 0;
