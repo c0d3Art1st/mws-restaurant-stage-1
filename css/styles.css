@@ -171,6 +171,22 @@ nav h1 a {
    height: 400px;
    width: 100%;
    background-color: #ccc;
+   position: relative;
+}
+
+#map p {
+   color: white;
+   font-size: 22px;
+   position: absolute;
+   padding: 5px 10px;
+   background: #aaa;
+   text-align: center;
+   width: 220px;
+   height: 44px;
+   border-radius: 5px;
+   left: calc(50% - 110px);
+   top: calc(50% - 22px);
+   margin: auto auto;
 }
 
 /* ====================== Restaurant Filtering ====================== */
