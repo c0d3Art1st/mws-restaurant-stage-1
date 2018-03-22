@@ -339,7 +339,7 @@ nav h1 a {
    line-height: 1.1;
 }
 
-#restaurant-img {
+#restaurant-img-area .restaurant-img {
    width: 100%;
 	border-radius: 20px 0 0 0;
 	display: block;

@@ -67,10 +67,30 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
    name.innerHTML = restaurant.name;
    name.setAttribute("aria-label", `${restaurant.name} - info section`)
 
-   const image = document.getElementById('restaurant-img');
-   image.className = 'restaurant-img'
+   const picture = document.getElementById('restaurant-picture');
+   const source = document.createElement('source');
+   const imageName = DBHelper.imageUrlForRestaurant(restaurant);
+
+   source.setAttribute("srcset", createWebpSourceSet(imageName))
+   source.className = 'restaurant-img';
+   source.setAttribute("sizes", createImageSizes());
+   source.setAttribute("type", "image/webp");
+
+   picture.append(source);
+
+   const image = document.createElement('img');
+   image.className = 'restaurant-img';
+   image.src = imageName
+   image.setAttribute("srcset", createJpegSourceSet(imageName));
+   image.setAttribute("sizes", createImageSizes());
    image.setAttribute("alt", restaurant.photograph_alt);
-   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+   picture.append(image);
+
+
+   // const image = document.getElementById('restaurant-img');
+   // image.className = 'restaurant-img'
+   // image.setAttribute("alt", restaurant.photograph_alt);
+   // image.src = DBHelper.imageUrlForRestaurant(restaurant);
 
    const cuisine = document.getElementById('restaurant-cuisine');
    cuisine.innerHTML = restaurant.cuisine_type;
@@ -84,6 +104,22 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
    }
    // fill reviews
    fillReviewsHTML();
+}
+
+createJpegSourceSet = (image) => {
+   let imageName = image.substr(0, image.indexOf('.'));
+   return `${imageName}_400.jpg 400w, ${imageName}_600.jpg 600w, ${imageName}_800.jpg 800w`;
+}
+
+createWebpSourceSet = (image) => {
+   let imageName = image.substr(0, image.indexOf('.'));
+   return `${imageName}_400.webp 400w, ${imageName}_600.webp 600w, ${imageName}_800.webp 800w`;
+}
+
+createImageSizes = () => {
+   return "(max-width: 590px) 100vw," +
+          "(max-width: 1200px) 50vw, " +
+          "35vw";
 }
 
 /**

@@ -163,6 +163,7 @@ createRestaurantHTML = (restaurant) => {
    const source = document.createElement('source');
    const imageName = DBHelper.imageUrlForRestaurant(restaurant);
 
+   source.className = 'restaurant-img';
    source.setAttribute("srcset", createWebpSourceSet(imageName))
    source.setAttribute("sizes", createImageSizes());
    source.setAttribute("type", "image/webp");
