@@ -31,11 +31,8 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
    let requestUrl = new URL(event.request.url);
 
-   if(!requestUrl.origin.startsWith('https://maps.googleapis.com')  &&
-      !requestUrl.origin.startsWith('https://maps.gstatic.com')  &&
-      !requestUrl.origin.startsWith('https://fonts.gstatic.com') &&
-      !requestUrl.origin.startsWith('https://fonts.googleapis.com')) {
-      console.log("Request to: ", requestUrl.origin);
+   if(!isGoogleOrigin(requestUrl.origin)) {
+      // cache local content
       event.respondWith(
          caches.match(event.request)
          .then(response => {
@@ -63,3 +60,11 @@ self.addEventListener('fetch', event => {
       );
    }
 });
+
+
+isGoogleOrigin = (origin) => {
+   return origin.startsWith('https://maps.googleapis.com') ||
+          origin.startsWith('https://maps.gstatic.com')  ||
+          origin.startsWith('https://fonts.gstatic.com') ||
+          origin.startsWith('https://fonts.googleapis.com');
+}
