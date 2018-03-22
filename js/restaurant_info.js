@@ -119,7 +119,7 @@ createWebpSourceSet = (image) => {
 createImageSizes = () => {
    return "(max-width: 590px) 100vw," +
           "(max-width: 1200px) 50vw, " +
-          "35vw";
+          "25vw";
 }
 
 /**
