@@ -1,8 +1,8 @@
 let restaurants,
    neighborhoods,
    cuisines
-var map
-var markers = []
+var map;
+var markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -10,6 +10,7 @@ var markers = []
 document.addEventListener('DOMContentLoaded', (event) => {
    fetchNeighborhoods();
    fetchCuisines();
+   updateRestaurants();
 });
 
 /**
@@ -75,11 +76,16 @@ window.initMap = () => {
       lat: 40.722216,
       lng: -73.987501
    };
-   self.map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
-      center: loc,
-      scrollwheel: false
-   });
+   try {
+      self.map = new google.maps.Map(document.getElementById('map'), {
+         zoom: 12,
+         center: loc,
+         scrollwheel: false
+      });
+   }
+   catch(Error) {
+      Console.log("#ERROR# [Main.js] Error while getting Google Map");
+   }
    updateRestaurants();
 }
 
@@ -98,7 +104,7 @@ updateRestaurants = () => {
 
    DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
       if (error) { // Got an error!
-         console.error(error);
+         console.error("[DBHelper] Error while fetching Data: ",error);
       } else {
          resetRestaurants(restaurants);
          fillRestaurantsHTML();

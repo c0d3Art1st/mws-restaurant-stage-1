@@ -29,29 +29,37 @@ self.addEventListener('install', event => {
 
 
 self.addEventListener('fetch', event => {
-	event.respondWith(
-		caches.match(event.request)
-		.then(response => {
-			if (response)
-				return response;
-			return fetch(event.request)
-			.then(res => {
-				return caches.open(DYN_CACHE_NAME)
-				.then(cache => {
-					cache.put(event.request.url, res.clone());
-					return res;
-				});
-			})
-         .catch(err => {
-            return caches.open(STATIC_CACHE_NAME)
-            .then(cache => {
-               if (event.request.headers.get('accept').includes('text/html')) {
-                  return cache.match('/offline.html');
-               } else {
-                  console.log("#ERROR# [ServiceWorker] Error while caching dynamic files: ", err);
-               }
+   let requestUrl = new URL(event.request.url);
+
+   if(!requestUrl.origin.startsWith('https://maps.googleapis.com')  &&
+      !requestUrl.origin.startsWith('https://maps.gstatic.com')  &&
+      !requestUrl.origin.startsWith('https://fonts.gstatic.com') &&
+      !requestUrl.origin.startsWith('https://fonts.googleapis.com')) {
+      console.log("Request to: ", requestUrl.origin);
+      event.respondWith(
+         caches.match(event.request)
+         .then(response => {
+            if (response)
+            return response;
+            return fetch(event.request)
+            .then(res => {
+               return caches.open(DYN_CACHE_NAME)
+               .then(cache => {
+                  cache.put(event.request.url, res.clone());
+                  return res;
+               });
+            })
+            .catch(err => {
+               return caches.open(STATIC_CACHE_NAME)
+               .then(cache => {
+                  if (event.request.headers.get('accept').includes('text/html')) {
+                     return cache.match('/offline.html');
+                  } else {
+                     console.log("#ERROR# [ServiceWorker] Error while caching dynamic files: ", err);
+                  }
+               });
             });
-         });
-		})
-	);
+         })
+      );
+   }
 });

@@ -2,12 +2,26 @@ let restaurant;
 var map;
 
 /**
+ * Fetch neighborhoods and cuisines as soon as the page is loaded.
+ */
+document.addEventListener('DOMContentLoaded', (event) => {
+   fetchRestaurantFromURL((error, restaurant) => {
+      if (error) { // Got an error!
+         console.error("#ERROR# [Restaurant_Info] Error while fetching Restaurant: ", error);
+      } else {
+         fillBreadcrumb();
+      }
+   });
+});
+
+
+/**
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
    fetchRestaurantFromURL((error, restaurant) => {
       if (error) { // Got an error!
-         console.error(error);
+         console.error("#ERROR# [Restaurant_Info] Error while fetching Restaurant: ", error);
       } else {
          self.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 16,
@@ -172,6 +186,8 @@ createReviewHTML = (review) => {
  */
 fillBreadcrumb = (restaurant = self.restaurant) => {
    const breadcrumb = document.getElementById('breadcrumb');
+   breadcrumb.innerHTML="<li><a href='/'>Home</a></li>";
+   console.log(breadcrumb.childNodes);
    const li = document.createElement('li');
    li.innerHTML = restaurant.name;
    breadcrumb.appendChild(li);
