@@ -1,6 +1,7 @@
 let self = this;
 const STATIC_CACHE_NAME = "static-v1";
 const DYN_CACHE_NAME = "dynamic-v1";
+const FILE_LIMIT_DYN_CACHE = 50;
 
 let staticFiles = [
    "/",
@@ -42,6 +43,7 @@ self.addEventListener('fetch', event => {
             .then(res => {
                return caches.open(DYN_CACHE_NAME)
                .then(cache => {
+                  trimCache(DYN_CACHE_NAME, FILE_LIMIT_DYN_CACHE);
                   cache.put(event.request.url, res.clone());
                   return res;
                });
@@ -60,6 +62,19 @@ self.addEventListener('fetch', event => {
       );
    }
 });
+
+trimCache = (cacheName, maxItems) => {
+   caches.open(cacheName)
+   .then(cache => {
+      return cache.keys()
+      .then(keys => {
+         if(keys.length > maxItems) {
+            cache.delete(keys[0])
+            .then(trimCache(cacheName, maxItems));
+         }
+      });
+   })
+}
 
 
 isGoogleOrigin = (origin) => {
