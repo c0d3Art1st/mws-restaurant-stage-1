@@ -10,7 +10,7 @@ var markers = [];
 document.addEventListener('DOMContentLoaded', (event) => {
    fetchNeighborhoods();
    fetchCuisines();
-   updateRestaurants();
+   updateRestaurants();   // workaround: cardviews are loaded even if request to G-maps failes
 });
 
 /**
@@ -84,7 +84,7 @@ window.initMap = () => {
       });
    }
    catch(Error) {
-      Console.log("#ERROR# [Main.js] Error while getting Google Map");
+      Console.log("[Main.js] ERROR while getting Google Map");
    }
    updateRestaurants();
 }
@@ -199,7 +199,6 @@ createRestaurantHTML = (restaurant) => {
    more.href = DBHelper.urlForRestaurant(restaurant);
    more.setAttribute("role", "button");
    more.setAttribute("aria-label", `${restaurant.name} - View Details`);
-   // infoBody.append(more)
 
    card.append(infoBody);
    card.append(more)
@@ -208,16 +207,25 @@ createRestaurantHTML = (restaurant) => {
    return li;
 }
 
+/**
+ * Creates content for jpeg srcset
+ */
 createJpegSourceSet = (image) => {
    let imageName = image.substr(0, image.indexOf('.'));
    return `${imageName}_400.jpg 400w, ${imageName}_600.jpg 600w, ${imageName}_800.jpg 800w`;
 }
 
+/**
+ * Creates content for webp srcset
+ */
 createWebpSourceSet = (image) => {
    let imageName = image.substr(0, image.indexOf('.'));
    return `${imageName}_400.webp 400w, ${imageName}_600.webp 600w, ${imageName}_800.webp 800w`;
 }
 
+/**
+ * Create responsive sizes for images
+ */
 createImageSizes = () => {
    return "(max-width: 590px) 100vw," +
           "(max-width: 800px) 50vw, " +

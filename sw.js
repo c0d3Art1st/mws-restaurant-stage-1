@@ -3,6 +3,9 @@ const STATIC_CACHE_NAME = "static-v1";
 const DYN_CACHE_NAME = "dynamic-v1";
 const FILE_LIMIT_DYN_CACHE = 50;
 
+/**
+ * Static files to cache on install-event of SW
+ */
 let staticFiles = [
    "/",
    "/index.html",
@@ -14,6 +17,7 @@ let staticFiles = [
    "/js/restaurant_info.js"
 ];
 
+
 self.addEventListener('install', event => {
    console.log("[ServiceWorker] Successfully installed SW")
    event.waitUntil(
@@ -23,7 +27,7 @@ self.addEventListener('install', event => {
          return cache.addAll(staticFiles);
       })
       .catch(err => {
-         console.log("#ERROR# [ServiceWorker] Error while caching static files: ", err);
+         console.log("[ServiceWorker] ERROR while caching static files: ", err);
       })
    );
 });
@@ -33,7 +37,7 @@ self.addEventListener('fetch', event => {
    let requestUrl = new URL(event.request.url);
 
    if(!isGoogleOrigin(requestUrl.origin)) {
-      // cache local content
+      // cache local content - CACHE FIRST NETWORK FALLBACK
       event.respondWith(
          caches.match(event.request)
          .then(response => {
@@ -49,12 +53,13 @@ self.addEventListener('fetch', event => {
                });
             })
             .catch(err => {
+               // fetch fallback page in case text-resource is requested
                return caches.open(STATIC_CACHE_NAME)
                .then(cache => {
                   if (event.request.headers.get('accept').includes('text/html')) {
                      return cache.match('/offline.html');
                   } else {
-                     console.log("#ERROR# [ServiceWorker] Error while caching dynamic files: ", err);
+                     console.log("[ServiceWorker] ERROR while caching dynamic files: ", err);
                   }
                });
             });
@@ -63,6 +68,10 @@ self.addEventListener('fetch', event => {
    }
 });
 
+
+/**
+ * Trim cache after max number of allowed items has been reached
+ */
 trimCache = (cacheName, maxItems) => {
    caches.open(cacheName)
    .then(cache => {
@@ -76,7 +85,9 @@ trimCache = (cacheName, maxItems) => {
    })
 }
 
-
+/**
+ * Determines if requested resource is located on a Google server
+ */
 isGoogleOrigin = (origin) => {
    return origin.startsWith('https://maps.googleapis.com') ||
           origin.startsWith('https://maps.gstatic.com')  ||

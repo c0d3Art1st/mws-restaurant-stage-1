@@ -2,12 +2,12 @@ let restaurant;
 var map;
 
 /**
- * Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * Fill Breadcrumb in offline mode, when G-maps is not available
  */
 document.addEventListener('DOMContentLoaded', (event) => {
    fetchRestaurantFromURL((error, restaurant) => {
       if (error) { // Got an error!
-         console.error("#ERROR# [Restaurant_Info] Error while fetching Restaurant: ", error);
+         console.error("[Restaurant_Info] ERROR while fetching Restaurant: ", error);
       } else {
          fillBreadcrumb();
       }
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 window.initMap = () => {
    fetchRestaurantFromURL((error, restaurant) => {
       if (error) { // Got an error!
-         console.error("#ERROR# [Restaurant_Info] Error while fetching Restaurant: ", error);
+         console.error("[Restaurant_Info] ERROR while fetching Restaurant: ", error);
       } else {
          self.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 16,
@@ -86,12 +86,6 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
    image.setAttribute("alt", restaurant.photograph_alt);
    picture.append(image);
 
-
-   // const image = document.getElementById('restaurant-img');
-   // image.className = 'restaurant-img'
-   // image.setAttribute("alt", restaurant.photograph_alt);
-   // image.src = DBHelper.imageUrlForRestaurant(restaurant);
-
    const cuisine = document.getElementById('restaurant-cuisine');
    cuisine.innerHTML = restaurant.cuisine_type;
 
@@ -106,16 +100,25 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
    fillReviewsHTML();
 }
 
+/**
+ * Creates content for jpeg srcset
+ */
 createJpegSourceSet = (image) => {
    let imageName = image.substr(0, image.indexOf('.'));
    return `${imageName}_400.jpg 400w, ${imageName}_600.jpg 600w, ${imageName}_800.jpg 800w`;
 }
 
+/**
+ * Creates content for webp srcset
+ */
 createWebpSourceSet = (image) => {
    let imageName = image.substr(0, image.indexOf('.'));
    return `${imageName}_400.webp 400w, ${imageName}_600.webp 600w, ${imageName}_800.webp 800w`;
 }
 
+/**
+ * Create responsive sizes for images
+ */
 createImageSizes = () => {
    return "(max-width: 590px) 100vw," +
           "(max-width: 1200px) 50vw, " +
@@ -143,6 +146,9 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
    }
 }
 
+/**
+ *  Create hours-string with line-break, if two hour-time-spans exist per day
+ */
 processMultilineHours = (hours) => {
    let hoursString  = "";
    let openingHoursDivider = hours.indexOf(',');
@@ -223,7 +229,6 @@ createReviewHTML = (review) => {
 fillBreadcrumb = (restaurant = self.restaurant) => {
    const breadcrumb = document.getElementById('breadcrumb');
    breadcrumb.innerHTML="<li><a href='/'>Home</a></li>";
-   console.log(breadcrumb.childNodes);
    const li = document.createElement('li');
    li.innerHTML = restaurant.name;
    breadcrumb.appendChild(li);
