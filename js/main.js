@@ -142,6 +142,10 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
    addMarkersToMap();
 }
 
+/**
+ * Creates a message if no restaurants are availble for the selected
+ * neihborhood/cuisine-combination
+ */
 createEmptyMessage = () => {
    const li = document.createElement("li");
    li.style.width = "100%";
