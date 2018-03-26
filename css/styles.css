@@ -96,7 +96,7 @@ header {
    position: fixed;
    top: 0;
    width: 100%;
-   z-index: 1000;
+   z-index: 990;
    box-shadow: 0px 1px 2px #777;
 }
 
@@ -236,7 +236,7 @@ nav h1 a {
    background-color: #fff;
    font-family: Arial, sans-serif;
    margin: 0 0 20px 0;
-   min-height: 380px;
+
    text-align: left;
    width: 100%;
    /* border-radius: 20px 0 20px 0;
@@ -245,12 +245,14 @@ nav h1 a {
 }
 
 #restaurants-list li div {
-   padding: 10px 25px 25px 25px;
+   padding: 10px 25px 70px 25px;
 }
 
 #restaurants-list article {
    border-radius: 20px 0 20px 0;
    box-shadow: 0px 1px 6px 0 #ddd;
+   min-height: 405px;
+   position: relative;
 }
 
 #restaurants-list .restaurant-img {
@@ -286,7 +288,10 @@ nav h1 a {
    background-color: orange;
    border-bottom: 3px solid #eee;
    color: #fff;
-   display: inline-block;
+   position: absolute;
+   bottom: 20px;
+   left: 20px;
+   /* display: inline-block; */
    font-size: 10pt;
    margin: 15px 0 0;
    padding: 8px 30px 10px;
@@ -476,6 +481,10 @@ nav h1 a {
       margin: 10px 0px 10px 12px;
    }
 
+   #restaurants-list article {
+      min-height: 418px;
+   }
+
    /*############## Restaurant Details ##################*/
    #restaurant-container {
       display: flex;
@@ -531,7 +540,7 @@ nav h1 a {
    .filter-options {
       height: 125px;
       position: relative;
-      z-index: 990;
+      z-index: 950;
       box-shadow: 0px 1px 2px #bbb;
    }
 
@@ -541,7 +550,6 @@ nav h1 a {
       top: -20px;
       left: calc(50% - 58px);
       color: white;
-      z-index: 1002;
       padding: 5px 15px 0 15px;
       background: #3397DB;
       border-radius: 15px 15px 0 0;
@@ -572,6 +580,10 @@ nav h1 a {
 		width: 100%;
 		margin: 0 0px 20px 0;
 	}
+
+   #restaurants-list article {
+      min-height: 400px;
+   }
 
    #map-container {
       width:63%;
@@ -671,6 +683,10 @@ nav h1 a {
 		margin: 0 0 20px 0;
 	}
 
+   #restaurants-list article {
+      min-height: 360px;
+   }
+
    #restaurants-list .restaurant-img {
       min-height: 150px;
    }
@@ -703,6 +719,7 @@ nav h1 a {
       width: 50%;
    }
 }
+
 
 @media screen and (min-width: 1401px) {
    #map-container {
