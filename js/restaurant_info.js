@@ -63,6 +63,7 @@ fetchRestaurantFromURL = (callback) => {
  * Create restaurant HTML and add it to the webpage
  */
 fillRestaurantHTML = (restaurant = self.restaurant) => {
+   initInfoContainer();
    const name = document.getElementById('restaurant-name');
    name.innerHTML = restaurant.name;
    name.setAttribute("aria-label", `${restaurant.name} - info section`)
@@ -99,6 +100,27 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
    // fill reviews
    fillReviewsHTML();
 }
+
+/**
+* Initializes info container in restaurant.html
+*/
+initInfoContainer = () => {
+   document.querySelector("#info-container").innerHTML =
+   "<section id='restaurant-container'>" +
+      "<h2 id='restaurant-name'></h2>"+
+      "<div id='restaurant-img-area'>" +
+         "<picture id='restaurant-picture'></picture><!--" +
+      "--><p id='restaurant-cuisine'></p>" +
+      "</div>" +
+      "<div id='restaurant-info-area'>" +
+         "<p id='restaurant-address'></p>" +
+         "<table id='restaurant-hours'></table>" +
+      "</div>" +
+   "</section>" +
+   "<section id='reviews-container'>" +
+      "<ul id='reviews-list'></ul>" +
+   "</section>";
+};
 
 /**
  * Creates content for jpeg srcset
