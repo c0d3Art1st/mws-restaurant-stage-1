@@ -22,9 +22,11 @@
          <h1><a href="/">Restaurant Reviews</a></h1>
       </nav>
       <a href="#restaurant-container" class="skip-link">Skip to Restaurant Info</a>
-      <ul id="breadcrumb">
-         <li><a href="/">Home</a></li>
-      </ul>
+      <nav aria-label="Breadcrumb" id="breadcrumb">
+         <ol>
+            <li><a href="/">Home</a></li>
+         </ol>
+      </nav>
    </header>
 
    <main id="maincontent">
@@ -43,7 +45,7 @@
    </footer>
 
    <!--******************   scripts   ************************-->
-   <script type="application/javascript" charset="utf-8" src="js/app.js"></script>
+   <!-- <script type="application/javascript" charset="utf-8" src="js/app.js"></script> -->
    <script type="text/javascript" src="js/dbhelper.js"></script>
    <script type="text/javascript" src="js/restaurant_info.js"></script>
    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap"></script>

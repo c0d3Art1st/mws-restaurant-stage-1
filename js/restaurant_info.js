@@ -252,7 +252,11 @@ fillBreadcrumb = (restaurant = self.restaurant) => {
    const breadcrumb = document.getElementById('breadcrumb');
    breadcrumb.innerHTML="<li><a href='/'>Home</a></li>";
    const li = document.createElement('li');
-   li.innerHTML = restaurant.name;
+   const a = document.createElement('a');
+   a.setAttribute("href", "/restaurant.html?id=" + restaurant.id);
+   a.setAttribute("aria-current", "page");
+   a.text = restaurant.name;
+   li.append(a);
    breadcrumb.appendChild(li);
 }
 
