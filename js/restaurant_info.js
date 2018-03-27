@@ -106,18 +106,18 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 */
 initInfoContainer = () => {
    document.querySelector("#info-container").innerHTML =
-   "<section id='restaurant-container'>" +
+   "<section tabindex='0' id='restaurant-container'>" +
       "<h2 id='restaurant-name'></h2>"+
       "<div id='restaurant-img-area'>" +
          "<picture id='restaurant-picture'></picture><!--" +
       "--><p id='restaurant-cuisine'></p>" +
       "</div>" +
       "<div id='restaurant-info-area'>" +
-         "<p id='restaurant-address'></p>" +
-         "<table id='restaurant-hours'></table>" +
+         "<p id='restaurant-address' tabindex='0'></p>" +
+         "<table id='restaurant-hours' tabindex='0'></table>" +
       "</div>" +
    "</section>" +
-   "<section id='reviews-container'>" +
+   "<section id='reviews-container' tabindex='0'>" +
       "<ul id='reviews-list'></ul>" +
    "</section>";
 };
@@ -211,6 +211,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
    const li = document.createElement('li');
+   li.setAttribute("tabindex", "0");
    li.classList.add("review");
 
    const reviewHeader = document.createElement("div");
