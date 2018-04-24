@@ -11,6 +11,8 @@ let staticFiles = [
 	"/index.html",
 	"/offline.html",
 	"/css/styles.css",
+	"/js/idb.js",
+	"/js/utility.js",
 	"/js/app.js",
 	"/js/dbhelper.js",
 	"/js/main.js",
