@@ -214,6 +214,9 @@ createRestaurantHTML = (restaurant) => {
  * Creates content for jpeg srcset
  */
 createJpegSourceSet = (imageName) => {
+	if (imageName.search("undefined") != -1) {
+		imageName = imageName.replace("undefined", "no_image");
+	}
    return `${imageName}_400.jpg 400w, ${imageName}_600.jpg 600w, ${imageName}_800.jpg 800w`;
 }
 
@@ -221,6 +224,9 @@ createJpegSourceSet = (imageName) => {
  * Creates content for webp srcset
  */
 createWebpSourceSet = (imageName) => {
+	if (imageName.search("undefined") != -1) {
+		imageName = imageName.replace("undefined", "no_image");
+	}
    return `${imageName}_400.webp 400w, ${imageName}_600.webp 600w, ${imageName}_800.webp 800w`;
 }
 
