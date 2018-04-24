@@ -1,6 +1,8 @@
-let dbPromise = idb.open("pwagram", 1, (db) => {
-   if (!db.objectStoreNames.contains('posts'))
-      db.createObjectStore('restaurants', {
+const IDB_NAME = "restaurants";
+
+let dbPromise = idb.open("restaurant_review_(stage_2)", 1, (db) => {
+   if (!db.objectStoreNames.contains(IDB_NAME))
+      db.createObjectStore(IDB_NAME, {
          keyPath: 'id'
       });
 });
@@ -13,6 +15,24 @@ function writeData(storeName, data) {
       store.put(data);
       return tx.complete;
    });
+}
+
+function readData(storeName, key) {
+	return dbPromise
+	.then(db => {
+		let tx = db.transaction(storeName);
+		let store = tx.objectStore(storeName);
+		return store.get(key);
+	});
+}
+
+function getStoreCount(storeName) {
+	return dbPromise
+	.then(db => {
+		let tx = db.transaction(storeName);
+		let store = tx.objectStore(storeName);
+		return store.count();
+	});
 }
 
 function readAllData(storeName) {

@@ -1,6 +1,11 @@
 let self = this;
-const STATIC_CACHE_NAME = "static-v1";
-const DYN_CACHE_NAME = "dynamic-v1";
+
+importScripts('/js/idb.js');
+importScripts('/js/utility.js');
+
+
+const STATIC_CACHE_NAME = "static-v2";
+const DYN_CACHE_NAME = "dynamic-v2";
 const FILE_LIMIT_DYN_CACHE = 50;
 
 /**
@@ -34,6 +39,21 @@ self.addEventListener('install', event => {
 	);
 });
 
+self.addEventListener('activate', function(event) {
+	console.log('[Service Worker] Activating Service Worker ....', event);
+	event.waitUntil(
+		caches.keys()
+		.then(function(keyList) {
+			return Promise.all(keyList.map(function(key) {
+				if (key !== STATIC_CACHE_NAME && key !== DYN_CACHE_NAME) {
+					console.log('[Service Worker] Removing old cache: ', key);
+					return caches.delete(key);
+				}
+			}));
+		})
+	);
+	return self.clients.claim();
+});
 
 self.addEventListener('fetch', event => {
 	let requestUrl = new URL(event.request.url);
@@ -41,39 +61,98 @@ self.addEventListener('fetch', event => {
 	if (!isGoogleOrigin(requestUrl.origin)) {
 		// cache local content - CACHE FIRST NETWORK FALLBACK
 		if (isRestaurantDataRequest(requestUrl.origin)) {
-			// console.log("requesting Restaurant-JSON-data...");
+			event.respondWith(serveIdbData(event.request));
 		} else {
-			event.respondWith(
-				caches.match(event.request)
-				.then(response => {
-					if (response)
-						return response;
-					return fetch(event.request)
-						.then(res => {
-							return caches.open(DYN_CACHE_NAME)
-								.then(cache => {
-									trimCache(DYN_CACHE_NAME, FILE_LIMIT_DYN_CACHE);
-									cache.put(event.request.url, res.clone());
-									return res;
-								});
-						})
-						.catch(err => {
-							// fetch fallback page in case text-resource is requested
-							return caches.open(STATIC_CACHE_NAME)
-								.then(cache => {
-									if (event.request.headers.get('accept').includes('text/html')) {
-										return cache.match('/offline.html');
-									} else {
-										console.log("[ServiceWorker] ERROR while caching dynamic files: ", err);
-									}
-								});
-						});
-				})
-			);
+			event.respondWith(serveCachedData(event.request));
 		}
 	}
 });
 
+/**
+ * Strategy for dynamic data (restaurant-info from node-server)
+ */
+serveIdbData = (request) => {
+	return readAllData(IDB_NAME)
+	.then(data => {
+		if (data.length > 0) {
+			var blob = new Blob([JSON.stringify(data, null, 2)], {
+				type: 'application/json'
+			});
+			var init = { 'status': 200, 'statusText': 'super-Great'};
+			// try network-fetch to update idb
+			updateRestaurantsFromNetwork(request)
+			return new Response(blob, init);
+		} else {
+			return updateRestaurantsFromNetwork(request);
+		}
+	})
+	.catch(error => {
+		console.log("[ServiceWorker] ERROR while fetching idb-data: ", error);
+	})
+}
+
+/**
+ * Strategy for static data (app-shell)
+ */
+serveCachedData = (request) => {
+	return caches.match(request)
+	.then(response => {
+		if (response)
+			return response;
+		return fetch(request)
+			.then(res => {
+				return caches.open(DYN_CACHE_NAME)
+					.then(cache => {
+						trimCache(DYN_CACHE_NAME, FILE_LIMIT_DYN_CACHE);
+						cache.put(request.url, res.clone());
+						return res;
+					});
+			})
+			.catch(err => {
+				// fetch fallback page in case text-resource is requested
+				return caches.open(STATIC_CACHE_NAME)
+					.then(cache => {
+						if (request.headers.get('accept').includes('text/html')) {
+							return cache.match('/offline.html');
+						} else {
+							console.log("[ServiceWorker] ERROR while caching dynamic files: ", err);
+						}
+					});
+			});
+	})
+}
+
+/**
+ * Retrieves Restraurant-info from network and updated IndexedDB with it
+ */
+updateRestaurantsFromNetwork = (request) => {
+	return fetch(request)
+		.then(response => {
+			let clonedRes = response.clone();
+			clearAllData(IDB_NAME)
+				.then(() => {
+					return clonedRes.json();
+				})
+				.then(data => {
+					let id = 1;
+					for (let key in data) {
+						let current = data[key];
+						let tmp = {};
+						tmp.id = id;
+						tmp.name = current.name;
+						tmp.neihborhood = current.neighborhood;
+						tmp.photograph = current.photograph;
+						tmp.address = current.address;
+						tmp.latlng = current.latlng;
+						tmp.cuisine_type = current.cuisine_type;
+						tmp.reviews = current.reviews;
+						writeData(IDB_NAME, tmp)
+						id++;
+					}
+				});
+			return response;
+		});
+}
 
 /**
  * Trim cache after max number of allowed items has been reached
