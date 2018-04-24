@@ -166,7 +166,6 @@ createRestaurantHTML = (restaurant) => {
    const picture = document.createElement('picture');
    const source = document.createElement('source');
    const imageName = DBHelper.imageUrlForRestaurant(restaurant);
-
    source.className = 'restaurant-img';
    source.setAttribute("srcset", createWebpSourceSet(imageName))
    source.setAttribute("sizes", createImageSizes());
@@ -214,16 +213,14 @@ createRestaurantHTML = (restaurant) => {
 /**
  * Creates content for jpeg srcset
  */
-createJpegSourceSet = (image) => {
-   let imageName = image.substr(0, image.indexOf('.'));
+createJpegSourceSet = (imageName) => {
    return `${imageName}_400.jpg 400w, ${imageName}_600.jpg 600w, ${imageName}_800.jpg 800w`;
 }
 
 /**
  * Creates content for webp srcset
  */
-createWebpSourceSet = (image) => {
-   let imageName = image.substr(0, image.indexOf('.'));
+createWebpSourceSet = (imageName) => {
    return `${imageName}_400.webp 400w, ${imageName}_600.webp 600w, ${imageName}_800.webp 800w`;
 }
 
