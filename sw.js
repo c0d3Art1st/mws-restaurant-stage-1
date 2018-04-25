@@ -58,7 +58,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', event => {
 	let requestUrl = new URL(event.request.url);
 
-	if (!isGoogleOrigin(requestUrl.origin)) {
+	if (!isGoogleMapsOrigin(requestUrl.origin)) {
 		// cache local content - CACHE FIRST NETWORK FALLBACK
 		if (isRestaurantDataRequest(requestUrl.origin)) {
 			event.respondWith(serveIdbData(event.request));
@@ -173,11 +173,9 @@ trimCache = (cacheName, maxItems) => {
 /**
  * Determines if requested resource is located on a Google server
  */
-isGoogleOrigin = (origin) => {
+isGoogleMapsOrigin = (origin) => {
 	return origin.startsWith('https://maps.googleapis.com') ||
-		origin.startsWith('https://maps.gstatic.com') ||
-		origin.startsWith('https://fonts.gstatic.com') ||
-		origin.startsWith('https://fonts.googleapis.com');
+		origin.startsWith('https://maps.gstatic.com');
 }
 
 /**
