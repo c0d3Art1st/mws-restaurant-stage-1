@@ -140,7 +140,7 @@ updateRestaurantsFromNetwork = (request) => {
 						let tmp = {};
 						tmp.id = id;
 						tmp.name = current.name;
-						tmp.neihborhood = current.neighborhood;
+						tmp.neighborhood = current.neighborhood;
 						tmp.photograph = current.photograph;
 						tmp.address = current.address;
 						tmp.latlng = current.latlng;
