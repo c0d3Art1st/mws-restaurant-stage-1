@@ -178,7 +178,7 @@ createRestaurantHTML = (restaurant) => {
    image.src = imageName
    image.setAttribute("srcset", createJpegSourceSet(imageName));
    image.setAttribute("sizes", createImageSizes());
-   image.setAttribute("alt", restaurant.photograph_alt);
+   image.setAttribute("alt", restaurant.name);
    picture.append(image);
 
    card.append(picture);

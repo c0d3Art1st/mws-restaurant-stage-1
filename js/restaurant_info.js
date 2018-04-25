@@ -84,7 +84,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
    image.src = imageName
    image.setAttribute("srcset", createJpegSourceSet(imageName));
    image.setAttribute("sizes", createImageSizes());
-   image.setAttribute("alt", restaurant.photograph_alt);
+   image.setAttribute("alt", restaurant.name);
    picture.append(image);
 
    const cuisine = document.getElementById('restaurant-cuisine');
