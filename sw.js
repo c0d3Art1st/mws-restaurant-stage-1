@@ -4,8 +4,8 @@ importScripts('/js/idb.js');
 importScripts('/js/utility.js');
 
 
-const STATIC_CACHE_NAME = "static-v2";
-const DYN_CACHE_NAME = "dynamic-v2";
+const STATIC_CACHE_NAME = "static-v1";
+const DYN_CACHE_NAME = "dynamic-v1";
 const FILE_LIMIT_DYN_CACHE = 50;
 
 /**

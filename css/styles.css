@@ -142,7 +142,7 @@ nav h1 a {
 }
 
 #breadcrumb {
-   padding: 10px 40px 16px 20px;
+   padding: 1px 40px 16px 20px;
    list-style: none;
    background-color: #dedede;
    margin: 0;
@@ -150,6 +150,10 @@ nav h1 a {
    height: 0;
    min-height: 50px;
    text-align: left;
+}
+
+#breadcrumb ol {
+   padding: 0;
 }
 
 #breadcrumb li a[aria-current="page"] {
@@ -171,7 +175,7 @@ nav h1 a {
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-   color: #0275d8;
+   color: #0659a1;
    text-decoration: none;
 }
 
@@ -362,7 +366,7 @@ nav h1 a {
 }
 
 #restaurant-name {
-   color: #f18200;
+   color: #af5e00;
    font-family: Arial, sans-serif;
    font-size: 20pt;
    font-weight: 200;
@@ -422,7 +426,7 @@ nav h1 a {
 }
 
 #reviews-container h2 {
-   color: #f58500;
+   color: #af5e00;
    font-size: 24pt;
    font-weight: 300;
    letter-spacing: -1px;
@@ -477,7 +481,7 @@ nav h1 a {
 }
 
 .review-body .review-rating {
-   background-color: orange;
+   background-color: #af5e00;
    padding: 2px;
    font-size: 11pt;
    font-weight: bold;
