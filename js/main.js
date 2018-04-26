@@ -4,8 +4,10 @@ let restaurants,
 var map;
 var markers = [];
 let loadMapButton;
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * Sets up load-map button
  */
 document.addEventListener('DOMContentLoaded', (event) => {
    fetchNeighborhoods();
@@ -18,9 +20,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		let script = document.createElement("script");
 		script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap");
 		document.body.appendChild(script);
+		setTimeout(displayMapNotAvailable, 1750);
 	};
-{/* <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap"></script> */}
 });
+
+/*
+ * Displays 'Map not available offline'-message after certain amount off ms
+ */
+displayMapNotAvailable = () => {
+	document.querySelector("#map-not-available").style.display = "block";
+}
 
 /**
  * Fetch all neighborhoods and set their HTML.

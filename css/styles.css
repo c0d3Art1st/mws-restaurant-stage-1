@@ -199,17 +199,19 @@ nav h1 a {
    position: relative;
 }
 
-#map p {
+#map-not-available,
+#load-map-button {
    color: white;
    font-size: 22px;
    position: absolute;
    padding: 5px 10px;
    background: #aaa;
+   background: rgba(150, 150, 150, 0.7);
    text-align: center;
-   width: 220px;
+   width: 280px;
    height: 44px;
    border-radius: 5px;
-   left: calc(50% - 110px);
+   left: calc(50% - 140px);
    top: calc(50% - 22px);
    margin: auto auto;
 }
