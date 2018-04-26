@@ -296,11 +296,11 @@
 
 @media screen and (min-width: 1650px) {
    .inside #info-container {
-      width: 35%;
+      width: 40%;
    }
 
    .inside #map-container {
-      width: 65%;
+      width: 60%;
    }
 
    #restaurant-container {

@@ -141,6 +141,7 @@ updateRestaurantsFromNetwork = (request) => {
 						tmp.id = id;
 						tmp.name = current.name;
 						tmp.neighborhood = current.neighborhood;
+						tmp.operating_hours = current.operating_hours;
 						tmp.photograph = current.photograph;
 						tmp.address = current.address;
 						tmp.latlng = current.latlng;

@@ -37,7 +37,8 @@
    <main id="maincontent">
       <section id="map-container">
          <div aria-label="google maps" role="application" id="map">
-            <p>Map not available</p>
+				<p id="map-not-available"style="display:none">map not available offline</p>
+				<p id="load-map-button">click to load map</p>
          </div>
       </section>
       <section id="info-container">
@@ -55,8 +56,6 @@
    <script type="application/javascript" charset="utf-8" src="js/app.js"></script>
    <script type="text/javascript" src="js/dbhelper.js"></script>
    <script type="text/javascript" src="js/restaurant_info.js"></script>
-   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap"></script>
 
 </body>
-
 </html>

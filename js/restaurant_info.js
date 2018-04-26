@@ -1,6 +1,6 @@
 let restaurant;
 var map;
-
+let loadMapButton;
 /**
  * Fill Breadcrumb in offline mode, when G-maps is not available
  */
@@ -12,8 +12,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
          fillBreadcrumb();
       }
    });
+	loadMapButton = document.querySelector("#load-map-button");
+	loadMapButton.onclick = (event) => {
+		loadMapButton.style.display = "none";
+		let script = document.createElement("script");
+		script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap");
+		document.body.appendChild(script);
+		setTimeout(displayMapNotAvailable, 1750);
+	};
 });
 
+/*
+ * Displays 'Map not available offline'-message after certain amount off ms
+ */
+displayMapNotAvailable = () => {
+	document.querySelector("#map-not-available").style.display = "block";
+}
 
 /**
  * Initialize Google map, called from HTML.

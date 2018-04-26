@@ -216,6 +216,10 @@ nav h1 a {
    margin: auto auto;
 }
 
+#load-map-button {
+   cursor: pointer;
+}
+
 /* ====================== Restaurant Filtering ====================== */
 
 .filter-options {
@@ -336,7 +340,7 @@ nav h1 a {
 
 .inside #map-container {
    background: blue none repeat scroll 0 0;
-   height: 40vh;
+   height: 35vh;
    width: 100%;
    margin-top: 130px;
 }
