@@ -4,7 +4,7 @@ let restaurants,
 var map;
 var markers = [];
 let loadMapButton;
-
+let isMapLoaded = false;
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  * Sets up load-map button
@@ -16,13 +16,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 	loadMapButton = document.querySelector("#load-map-button");
 	loadMapButton.onclick = (event) => {
-		loadMapButton.style.display = "none";
-		let script = document.createElement("script");
-		script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap");
-		document.body.appendChild(script);
-		setTimeout(displayMapNotAvailable, 1750);
+		loadMap();
 	};
 });
+
+/*
+ * Loads live version of google-maps, creates/hides corresponding info messages
+ */
+loadMap = () => {
+	loadMapButton.style.display = "none";
+	let script = document.createElement("script");
+	script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap");
+	document.body.appendChild(script);
+	setTimeout(displayMapNotAvailable, 1750);
+	isMapLoaded = true;
+}
+
+/*
+ * Callback used by Dropdown's onchange-event
+ */
+update = () => {
+	if(!isMapLoaded) {
+		loadMap();
+	}
+	updateRestaurants(); // formerly directly used by Dropdown's onchange
+}
 
 /*
  * Displays 'Map not available offline'-message after certain amount off ms
