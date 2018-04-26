@@ -192,6 +192,7 @@ nav h1 a {
 /* ====================== Map ====================== */
 
 #map {
+   background: center url(https://maps.googleapis.com/maps/api/staticmap?format=jpg&center=40.722216,-74.005000&zoom=12&size=700x400&scale=1&maptype=roadmap&zoom=12&key=AIzaSyByqOtMGjXh8YoKXzP3O1d4lMdjzInz-zk);
    height: 400px;
    width: 100%;
    background-color: #ccc;
