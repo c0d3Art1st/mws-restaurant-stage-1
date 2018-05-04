@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	loadMapButton.onclick = (event) => {
 		loadMap();
 	};
+	loadMapButton.onkeyup = (event) => {
+		if(event.keyCode == 13)
+			loadMap();
+	};
 });
 
 /*

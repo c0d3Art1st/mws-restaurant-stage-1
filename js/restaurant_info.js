@@ -14,13 +14,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
    });
 	loadMapButton = document.querySelector("#load-map-button");
 	loadMapButton.onclick = (event) => {
-		loadMapButton.style.display = "none";
-		let script = document.createElement("script");
-		script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap");
-		document.body.appendChild(script);
-		setTimeout(displayMapNotAvailable, 1750);
+		loadMap()
+	};
+	loadMapButton.onkeyup = (event) => {
+		if(event.keyCode == 13)
+			loadMap();
 	};
 });
+
+/*
+ * Loads live version of google-maps, creates/hides corresponding info messages
+ */
+loadMap = () => {
+	loadMapButton.style.display = "none";
+	let script = document.createElement("script");
+	script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDMcC5Kw5Yn29DvQ2YOlL1sYyLScjDvuKI&libraries=places&callback=initMap");
+	document.body.appendChild(script);
+	setTimeout(displayMapNotAvailable, 1750);
+}
 
 /*
  * Displays 'Map not available offline'-message after certain amount off ms

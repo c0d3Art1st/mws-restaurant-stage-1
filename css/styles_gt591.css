@@ -2,7 +2,7 @@
    /*==================== Map =====================*/
 
    #map {
-      background: center url(https://maps.googleapis.com/maps/api/staticmap?format=jpg&center=40.722216,-74.005000&zoom=12&size=700x530&scale=2&maptype=roadmap&zoom=12&key=AIzaSyByqOtMGjXh8YoKXzP3O1d4lMdjzInz-zk);
+      background: center url(https://maps.googleapis.com/maps/api/staticmap?format=jpg&center=40.722216,-74.005000&zoom=12&size=700x650&scale=2&maptype=roadmap&zoom=12&key=AIzaSyByqOtMGjXh8YoKXzP3O1d4lMdjzInz-zk);
    }
 
 
