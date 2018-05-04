@@ -351,6 +351,7 @@ nav h1 a {
 .not-favorite {
    background: #3397DB no-repeat right center url("../img/ic_star_border_white_18dp.png");;
    background: rgba(52, 151, 219, 0.5) no-repeat right center url("../img/ic_star_border_white_18dp.png");
+   opacity: 0.8;
 }
 
 /* ====================== Restaurant Details ====================== */

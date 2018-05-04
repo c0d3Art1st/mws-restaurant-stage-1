@@ -243,8 +243,8 @@ createRestaurantHTML = (restaurant) => {
    li.append(card);
 
 	const favorite = document.createElement('button');
-	favorite.setAttribute("id", "favoriteButton");
-	favorite.setAttribute("class", "not-favorite");
+	favorite.classList.add("not-favorite");
+	favorite.classList.add("favoriteButton");
 	favorite.innerHTML = "Favorite";
 	li.append(favorite);
    return li;
