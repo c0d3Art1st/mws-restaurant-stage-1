@@ -97,6 +97,32 @@ section {
    height: 70px;
 }
 
+
+/* =====================  Snackbar   ===================== */
+
+#snackbar {
+   position: fixed;
+   z-index: 1000;
+   bottom: 0;
+   left: 0;
+   width: 100vw;
+   height: 70px;
+   padding: 20px;
+   background: #aaa;
+   background: rgba(50, 50, 50, 0.75);
+   transform: translateY(70px);
+   opacity: 0;
+   transition: all ease-in-out 0.4s;
+   font: 1.2rem "Roboto","sans-serif";
+   color: #eee;
+}
+
+#snackbar.visible {
+   opacity: 1;
+   transform: translateY(0px);
+}
+
+
 /* ====================== Navigation ====================== */
 .skip-link {
    position: absolute;
@@ -353,6 +379,9 @@ nav h1 a {
    background: rgba(52, 151, 219, 0.5) no-repeat right center url("../img/ic_star_border_white_18dp.png");
    opacity: 0.8;
 }
+
+
+
 
 /* ====================== Restaurant Details ====================== */
 

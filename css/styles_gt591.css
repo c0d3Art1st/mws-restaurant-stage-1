@@ -197,6 +197,21 @@
       width: 100%;
 		margin: 0 0px 20px 0;
    }
+
+   /*==================== Snackbar =====================*/
+
+   #snackbar {
+      top: 90px;
+      bottom: unset;
+      left: unset;
+      right: 10px;
+      width: 500px;
+      border-radius: 10px;
+      transform: translateY(-50px);
+   }
+   #snackbar .visible {
+      transform: translateY(0px);
+   }
 }
 
 

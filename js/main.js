@@ -3,6 +3,7 @@ let restaurants,
    cuisines
 var map;
 var markers = [];
+let snackbar = document.querySelector("#snackbar");
 let loadMapButton;
 let isMapLoaded = false;
 /**
@@ -19,6 +20,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		loadMap();
 	};
 });
+
+/*
+ * Displays message in snackbar for 3 Seconds
+ */
+function showSnackbar(message) {
+	snackbar.innerHTML = message;
+	snackbar.classList.add("visible");
+	setTimeout(() => {
+		snackbar.classList.remove("visible");
+	}, 3000)
+}
 
 /*
  * Loads live version of google-maps, creates/hides corresponding info messages
@@ -246,6 +258,9 @@ createRestaurantHTML = (restaurant) => {
 	favorite.classList.add("not-favorite");
 	favorite.classList.add("favoriteButton");
 	favorite.innerHTML = "Favorite";
+	favorite.onclick= () => {
+		showSnackbar("favorite for " + restaurant.id);
+	}
 	li.append(favorite);
    return li;
 }
