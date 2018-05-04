@@ -273,6 +273,7 @@ nav h1 a {
    text-align: left;
    width: 100%;
    display: block;
+   position: relative;
 }
 
 #restaurants-list li div {
@@ -331,6 +332,27 @@ nav h1 a {
    text-transform: uppercase;
 }
 
+.favorite,
+.not_favorite
+ {
+   position: absolute;
+   top: 0px;
+   right: 0px;
+   border-radius: 0 0 0 10px;
+   padding: 10px 40px 10px 8px;
+   color: white;
+   font:  20px "sans-serif";
+   border: none;
+}
+
+.favorite {
+   background: #3397DB no-repeat right center url("../img/ic_star_white_18dp.png");;}
+
+.not_favorite {
+   background: #3397DB no-repeat right center url("../img/ic_star_border_white_18dp.png");;
+   background: rgba(52, 151, 219, 0.5) no-repeat right center url("../img/ic_star_border_white_18dp.png");
+}
+
 /* ====================== Restaurant Details ====================== */
 
 .inside header {
@@ -338,7 +360,6 @@ nav h1 a {
    top: 0;
    width: 100%;
    min-height: 130px;
-   background: yellow;
    z-index: 1000;
 }
 

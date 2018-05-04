@@ -207,6 +207,7 @@ createRestaurantHTML = (restaurant) => {
    source.setAttribute("sizes", createImageSizes());
    source.setAttribute("type", "image/webp");
 
+
    picture.append(source);
 
    const image = document.createElement('img');
@@ -216,7 +217,6 @@ createRestaurantHTML = (restaurant) => {
    image.setAttribute("sizes", createImageSizes());
    image.setAttribute("alt", restaurant.name);
    picture.append(image);
-
    card.append(picture);
 
    const infoBody = document.createElement('div');
@@ -243,6 +243,11 @@ createRestaurantHTML = (restaurant) => {
    card.append(more)
    li.append(card);
 
+	const favorite = document.createElement('button');
+	favorite.setAttribute("id", "favoriteButton");
+	favorite.setAttribute("class", "favorite");
+	favorite.innerHTML = "Favorite";
+	li.append(favorite);
    return li;
 }
 
