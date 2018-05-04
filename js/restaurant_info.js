@@ -123,7 +123,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 	favorite.onclick= () => {
 		showSnackbar("favorite for " + restaurant.id);
 	}
-	document.querySelector("#restaurant-container").append(favorite);
+	document.querySelector("#restaurant-img-area").append(favorite);
 }
 
 /**
