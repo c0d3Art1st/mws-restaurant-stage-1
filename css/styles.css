@@ -219,6 +219,21 @@ nav h1 a {
    margin-top: 80px;
 }
 
+/* =====================  review FAB   ===================== */
+
+#review-fab {
+   position: fixed;
+   z-index: 1005;
+   bottom: 25px;
+   right: 25px;
+   width: 80px;
+   height: 80px;
+   border-radius: 40px;
+   box-shadow: 0 2px 3px 0px #555;
+   background: #3397DB no-repeat center url("../img/ic_add_white_48pt.png");
+   background-size: 36px 36px;
+}
+
 /* ====================== Map ====================== */
 
 #map {
