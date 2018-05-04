@@ -207,7 +207,6 @@ createRestaurantHTML = (restaurant) => {
    source.setAttribute("sizes", createImageSizes());
    source.setAttribute("type", "image/webp");
 
-
    picture.append(source);
 
    const image = document.createElement('img');
@@ -245,7 +244,7 @@ createRestaurantHTML = (restaurant) => {
 
 	const favorite = document.createElement('button');
 	favorite.setAttribute("id", "favoriteButton");
-	favorite.setAttribute("class", "favorite");
+	favorite.setAttribute("class", "not-favorite");
 	favorite.innerHTML = "Favorite";
 	li.append(favorite);
    return li;
