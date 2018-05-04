@@ -1,7 +1,7 @@
 let self = this;
 
 importScripts('/js/idb.js');
-importScripts('/js/utility.js');
+importScripts('/js/idb_utility.js');
 
 
 const STATIC_CACHE_NAME = "static-v1";

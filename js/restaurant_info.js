@@ -118,7 +118,11 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 	const favorite = document.createElement('button');
 	favorite.classList.add("not-favorite");
 	favorite.classList.add("favoriteButton")
+	favorite.setAttribute("aria-label", `Mark as favorite`);
 	favorite.innerHTML = "Favorite";
+	favorite.onclick= () => {
+		showSnackbar("favorite for " + restaurant.id);
+	}
 	document.querySelector("#restaurant-container").append(favorite);
 }
 

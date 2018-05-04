@@ -3,9 +3,9 @@ let restaurants,
    cuisines
 var map;
 var markers = [];
-let snackbar = document.querySelector("#snackbar");
 let loadMapButton;
 let isMapLoaded = false;
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  * Sets up load-map button
@@ -20,17 +20,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		loadMap();
 	};
 });
-
-/*
- * Displays message in snackbar for 3 Seconds
- */
-function showSnackbar(message) {
-	snackbar.innerHTML = message;
-	snackbar.classList.add("visible");
-	setTimeout(() => {
-		snackbar.classList.remove("visible");
-	}, 3000)
-}
 
 /*
  * Loads live version of google-maps, creates/hides corresponding info messages
@@ -250,18 +239,20 @@ createRestaurantHTML = (restaurant) => {
    more.setAttribute("role", "button");
    more.setAttribute("aria-label", `${restaurant.name} - View Details`);
 
-   card.append(infoBody);
-   card.append(more)
-   li.append(card);
-
 	const favorite = document.createElement('button');
 	favorite.classList.add("not-favorite");
 	favorite.classList.add("favoriteButton");
+	favorite.setAttribute("aria-label", `Mark as favorite`);
 	favorite.innerHTML = "Favorite";
 	favorite.onclick= () => {
 		showSnackbar("favorite for " + restaurant.id);
 	}
-	li.append(favorite);
+
+	card.append(infoBody);
+   card.append(more)
+	card.append(favorite);
+
+   li.append(card);
    return li;
 }
 

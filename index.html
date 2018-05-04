@@ -55,27 +55,25 @@
              <option value="all">All Cuisines</option>
            </select>
          </div>
-         <ul aria-live="polite" aria-atomic="true" aria-relevant="additions" id="restaurants-list">
+         <ul aria-live="polite" aria-atomic="true" aria-relevant="additions text" id="restaurants-list">
          </ul>
       </section>
    </main>
-
-
-
 
    <footer id="footer">
       Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
    </footer>
 
-	<div id="snackbar">
+	<div id="snackbar" aria-live="polite" aria-atomic="true" aria-relevant="additions">
 	</div>
 
    <!--******************   scripts   ************************-->
-	<script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
-	<script type="application/javascript" charset="utf-8" src="js/utility.js"></script>
-   <!-- <script type="application/javascript" charset="utf-8" src="js/app.js"></script> -->
-   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
-   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+	<script src="js/idb.js"></script>
+	<script src="js/idb_utility.js"></script>
+	<script src="js/gui_utility.js"></script>
+	<!-- <script src="js/app.js"></script> -->
+   <script src="js/dbhelper.js"></script>
+   <script src="js/main.js"></script>
 </body>
 
 </html>
