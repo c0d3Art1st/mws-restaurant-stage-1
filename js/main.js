@@ -249,7 +249,7 @@ createRestaurantHTML = (restaurant) => {
 	favorite.classList.add("favoriteButton");
 	favorite.setAttribute("aria-label", `Mark as favorite`);
 	favorite.innerHTML = "Favorite";
-	favorite.onclick= (e) => { toggleFavorite(e,restaurant);};
+	favorite.onclick= (e) => { DBHelper.toggleFavorite(e,restaurant);};
 
 	card.append(infoBody);
    card.append(more)
@@ -300,46 +300,4 @@ addMarkersToMap = (restaurants = self.restaurants) => {
       });
       self.markers.push(marker);
    });
-}
-
-/**
- * Toggle favorite state of restaurant
- */
-function toggleFavorite(e, rest) {
-	if ('serviceWorker' in navigator && 'SyncManager' in window) {
-		navigator.serviceWorker.ready.then((sw) => {
-		let restaurant = {};
-		// get updated version of bound restaurant from cache
-		readData(IDB_NAME, rest.id)
-		.then((result) => {
-			restaurant = result;
-			// toggle button appearance
-			toggleFavoriteButton(e, restaurant.is_favorite);
-
-			// write sync-task to idb
-			writeData(FAVORITE_SYNC_STORE, {id: restaurant.id, is_favorite: restaurant.is_favorite})
-				.then(() => {
-				// register sync-task in service worker and give it a TAG // so we can access it in the sw-code later
-					sw.sync.register('sync-new-favorite');
-				})
-				.then(() => {
-					DBHelper.isDbReachable()
-					.then(() => {
-						if (restaurant.is_favorite === "true") {
-							showSnackbar(`'${restaurant.name}' removed from favorites!`);
-						}
-						else {
-							showSnackbar(`'${restaurant.name}' added to favorites!`);
-						}
-					})
-					.catch(error => {
-						showSnackbar("Offline: Request stored for syncing!");
-					});
-				});
-			  });
-		  });
-	}
-	else {
-	// provide fallback for browsers that don't support the SyncManager // Just send the data via fetch-API!
-	}
 }

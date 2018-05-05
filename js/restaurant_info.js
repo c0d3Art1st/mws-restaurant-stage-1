@@ -127,13 +127,13 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
 	// add favorite button
 	const favorite = document.createElement('button');
-	favorite.classList.add("not-favorite");
-	favorite.classList.add("favoriteButton")
+	let favoriteClass = (restaurant.is_favorite === "true") ? "favorite" : "not-favorite";
+	favorite.classList.add(favoriteClass);
+	favorite.classList.add("favoriteButton");
 	favorite.setAttribute("aria-label", `Mark as favorite`);
 	favorite.innerHTML = "Favorite";
-	favorite.onclick= () => {
-		showSnackbar("favorite for " + restaurant.id);
-	}
+	favorite.onclick= (e) => { DBHelper.toggleFavorite(e,restaurant);};
+
 	document.querySelector("#restaurant-img-area").append(favorite);
 }
 

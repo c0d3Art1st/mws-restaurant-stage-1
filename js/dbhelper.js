@@ -168,11 +168,59 @@ class DBHelper {
   static isDbReachable() {
 	  return fetch("http://localhost:1337/test", {
 	  });
-		  // .then(response => {
-		  // 	console.log("Fuck-Response: ", response);
-		  // }).catch(error => {
-		  // 	console.log("ERROR WHILE FETCHING: ", error);
-		  // });
   }
 
+  /**
+   * Toggle favorite state of restaurant
+   */
+  static toggleFavorite(event, restaurant_src) {
+  	if ('serviceWorker' in navigator && 'SyncManager' in window) {
+  		navigator.serviceWorker.ready.then((sw) => {
+  		let restaurant = {};
+  		// get updated version of bound restaurant from cache
+  		readData(IDB_NAME, restaurant_src.id)
+  		.then((result) => {
+  			restaurant = result;
+  			// toggle button appearance
+  			toggleFavoriteButton(event, restaurant.is_favorite);
+
+			// update currently cached info of restaurant
+			let tmp = {};
+			readData(IDB_NAME, restaurant.id)
+			.then(res => {
+				tmp = res;
+				tmp.is_favorite = (restaurant.is_favorite === "true") ? "false" : "true";
+				return deleteItem(IDB_NAME, restaurant.id);
+			})
+			.then(res => {
+				writeData(IDB_NAME, tmp);
+			});
+
+  			// write sync-task to idb
+  			writeData(FAVORITE_SYNC_STORE, {id: restaurant.id, is_favorite: restaurant.is_favorite})
+  				.then(() => {
+  				// register sync-task in service worker and give it a TAG // so we can access it in the sw-code later
+  					sw.sync.register('sync-new-favorite');
+  				})
+  				.then(() => {
+  					DBHelper.isDbReachable()
+  					.then(() => {
+  						if (restaurant.is_favorite === "true") {
+  							showSnackbar(`'${restaurant.name}' removed from favorites!`);
+  						}
+  						else {
+  							showSnackbar(`'${restaurant.name}' added to favorites!`);
+  						}
+  					})
+  					.catch(error => {
+  						showSnackbar("Offline: Request stored for syncing!");
+  					});
+  				});
+  			  });
+  		  });
+  	}
+  	else {
+  	// provide fallback for browsers that don't support the SyncManager // Just send the data via fetch-API!
+  	}
+ }
 }

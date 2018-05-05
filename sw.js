@@ -68,18 +68,6 @@ self.addEventListener('sync', event => {
 					method: "PUT"
 				})
 				.then(res => {
-					// update currently cached info of restaurant
-					let tempRes = {};
-					readData(IDB_NAME, dt.id)
-					.then(res => {
-						tempRes = res;
-						tempRes.is_favorite = favoriteVal;
-						return deleteItem(IDB_NAME, dt.id);
-					})
-					.then(res => {
-						writeData(IDB_NAME, tempRes);
-					});
-					// deleted store sync-request from cache
 					deleteItem(FAVORITE_SYNC_STORE, dt.id);
 			   })
 			 }
@@ -151,6 +139,7 @@ serveCachedData = (request) => {
 						if (request.headers.get('accept').includes('text/html')) {
 							return cache.match('/offline.html');
 						} else {
+							console.log("ERROR when requesting: ", request);
 							console.log("[ServiceWorker] ERROR while caching dynamic files: ", err);
 						}
 					});
