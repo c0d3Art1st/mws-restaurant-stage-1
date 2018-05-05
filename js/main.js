@@ -249,7 +249,13 @@ createRestaurantHTML = (restaurant) => {
 	favorite.setAttribute("aria-label", `Mark as favorite`);
 	favorite.innerHTML = "Favorite";
 	favorite.onclick= () => {
-		showSnackbar("favorite for " + restaurant.id);
+		DBHelper.isDbReachable()
+		.then(res => {
+			showSnackbar(`'${restaurant.name}' marked as favorite`);
+		})
+		.catch(error => {
+			showSnackbar("UNREACHABLE: favorite for " + restaurant.id);
+		});
 	}
 
 	card.append(infoBody);

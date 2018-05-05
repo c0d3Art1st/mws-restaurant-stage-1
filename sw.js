@@ -17,7 +17,8 @@ let staticFiles = [
 	"/offline.html",
 	"/css/styles.css",
 	"/js/idb.js",
-	"/js/utility.js",
+	"/js/idb_utility.js",
+	"/js/gui_utility.js",
 	"/js/app.js",
 	"/js/dbhelper.js",
 	"/js/main.js",
@@ -58,7 +59,8 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', event => {
 	let requestUrl = new URL(event.request.url);
 
-	if (!isGoogleMapsOrigin(requestUrl.origin)) {
+	if (!isTestRequest(requestUrl) &&
+		 !isGoogleMapsOrigin(requestUrl.origin)) {
 		// cache local content - CACHE FIRST NETWORK FALLBACK
 		if (isRestaurantDataRequest(requestUrl.origin)) {
 			event.respondWith(serveIdbData(event.request));
@@ -169,6 +171,13 @@ trimCache = (cacheName, maxItems) => {
 					}
 				});
 		})
+}
+
+/**
+ * Determines if requested resource is for testing purposes
+ */
+isTestRequest = (request) => {
+	return request.pathname === '/test';
 }
 
 /**

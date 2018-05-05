@@ -165,4 +165,14 @@ class DBHelper {
     return marker;
   }
 
+  static isDbReachable() {
+	  return fetch("http://localhost:1337/test", {
+	  });
+		  // .then(response => {
+		  // 	console.log("Fuck-Response: ", response);
+		  // }).catch(error => {
+		  // 	console.log("ERROR WHILE FETCHING: ", error);
+		  // });
+  }
+
 }
