@@ -82,6 +82,7 @@
       font-size: 1.1rem;
    }
 
+
    /*==================== Info Container =====================*/
 
    #info-container {
@@ -135,6 +136,14 @@
 
    #restaurants-list article {
       min-height: 400px;
+   }
+
+   #add-review-fab {
+      display: none;
+   }
+
+   #add-review-button {
+      display: block;
    }
 
    /*==================== Map =====================*/

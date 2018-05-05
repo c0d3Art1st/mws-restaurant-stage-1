@@ -233,6 +233,13 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
    title.setAttribute("aria-label", `Reviews for restaurant ${self.restaurant.name}`)
    container.appendChild(title);
 
+	const reviewButton = document.createElement("div");
+	reviewButton.setAttribute("id", "add-review-button");
+	reviewButton.setAttribute("role", "button");
+	reviewButton.setAttribute("tabindex", "0");
+	reviewButton.innerHTML = "add review";
+	container.appendChild(reviewButton);
+
    if (!reviews) {
       const noReviews = document.createElement('p');
       noReviews.innerHTML = 'No reviews yet!';

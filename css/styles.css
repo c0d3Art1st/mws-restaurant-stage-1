@@ -221,7 +221,22 @@ nav h1 a {
 
 /* =====================  review FAB   ===================== */
 
-#review-fab {
+#add-review-button {
+   display: none;
+   position: absolute;
+   top: 15px;
+   right: 15px;
+   padding: 12px 10px;
+   width: 110px;
+   height: 46px;
+   border-radius: 10px;
+   background: #3397DB no-repeat right center url("../img/ic_add_white_48pt.png");
+   background-size: 26px 26px;
+   color: #eee
+}
+
+#add-review-fab {
+   display: block;
    position: fixed;
    z-index: 1005;
    bottom: 25px;
@@ -492,6 +507,7 @@ nav h1 a {
 }
 
 #reviews-container {
+   position: relative;
    padding: 20px 20px 80px 20px;
 }
 
