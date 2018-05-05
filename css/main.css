@@ -1,0 +1,316 @@
+#maincontent {
+   background-color: #f3f3f3;
+   min-height: 100%;
+}
+
+#maincontent {
+   margin-top: 80px;
+}
+
+/* ====================== Map ====================== */
+
+#map {
+   background: center url(https://maps.googleapis.com/maps/api/staticmap?format=jpg&center=40.722216,-74.005000&zoom=12&size=700x400&scale=1&maptype=roadmap&zoom=12&key=AIzaSyByqOtMGjXh8YoKXzP3O1d4lMdjzInz-zk);
+   height: 400px;
+   width: 100%;
+   background-color: #ccc;
+   position: relative;
+}
+
+#map-not-available,
+#load-map-button {
+   color: white;
+   font-size: 22px;
+   position: absolute;
+   padding: 5px 10px;
+   background: #aaa;
+   background: rgba(150, 150, 150, 0.7);
+   text-align: center;
+   width: 280px;
+   height: 44px;
+   border-radius: 5px;
+   left: calc(50% - 140px);
+   top: calc(50% - 22px);
+   margin: auto auto;
+}
+
+#load-map-button {
+   cursor: pointer;
+}
+
+/* ====================== Restaurant Filtering ====================== */
+
+.filter-options {
+   width: 100%;
+   background-color: #3397DB;
+   align-items: center;
+   padding: 10px;
+}
+
+.filter-options h2 {
+   color: white;
+   font-size: 0.9rem;
+   font-weight: normal;
+   line-height: 1;
+   margin: 0 0 0 12px;
+}
+
+.filter-options select {
+   background-color: white;
+   border: none;
+   font-family: Arial, sans-serif;
+   font-size: 11pt;
+   height: 48px;
+   letter-spacing: 0;
+   margin: 10px 0 10px 10px;
+   padding: 0 10px;
+   width: calc(100% - 20px);
+   border-radius: 8px;
+}
+
+/* ====================== Restaurant Listing ====================== */
+
+#restaurants-list {
+   background-color: #f3f3f3;
+   list-style: outside none none;
+   margin: 0;
+   padding: 10px 20px;
+   text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#restaurants-list li {
+   background-color: #fff;
+   font-family: Arial, sans-serif;
+   margin: 0 0 20px 0;
+   text-align: left;
+   width: 100%;
+   display: block;
+   position: relative;
+}
+
+#restaurants-list li div {
+   padding: 10px 25px 70px 25px;
+}
+
+#restaurants-list article {
+   border-radius: 20px 0 20px 0;
+   box-shadow: 0px 1px 6px 0 #ddd;
+   min-height: 405px;
+   position: relative;
+}
+
+#restaurants-list .restaurant-img {
+   background-color: #ccc;
+   background-size:auto;
+   display: inline-block;
+   margin: 0;
+   max-width: 100%;
+   min-height: 200px;
+   border-radius: 20px 0 0 0;
+}
+
+
+#restaurants-list li h1 {
+   /* color: #f18200; */
+   color: #af5e00;
+   font-family: Arial, sans-serif;
+   font-size: 14pt;
+   font-weight: 200;
+   letter-spacing: 0;
+   line-height: 1.3;
+   margin: 0px 0 10px;
+   display: block;
+   height: 38px;
+   text-transform: uppercase;
+}
+
+#restaurants-list p {
+   margin: 0;
+   font-size: 11pt;
+}
+
+#restaurants-list li a {
+   background-color: #af5e00;
+   border-bottom: 3px solid #eee;
+   color: #fff;
+   position: absolute;
+   bottom: 20px;
+   left: 20px;
+   font-size: 10pt;
+   margin: 15px 0 0;
+   padding: 8px 30px 10px;
+   text-align: center;
+   text-decoration: none;
+   text-transform: uppercase;
+}
+
+@media screen and (min-width: 591px) {
+   /*==================== Map =====================*/
+
+   #map {
+      background: center url(https://maps.googleapis.com/maps/api/staticmap?format=jpg&center=40.722216,-74.005000&zoom=12&size=700x650&scale=2&maptype=roadmap&zoom=12&key=AIzaSyByqOtMGjXh8YoKXzP3O1d4lMdjzInz-zk);
+   }
+
+
+   /*==================== Info Container =====================*/
+
+   #info-container {
+      position: relative;
+      box-shadow: 2px 0px 3px #bbb;
+   }
+
+	#restaurants-list li {
+		width: calc(50% - 10px);
+		margin: 0 20px 20px 0;
+	}
+	#restaurants-list li:nth-child(even) {
+		margin: 0 0 20px 0;
+	}
+
+   .filter-options select {
+      width: calc(50% - 20px);
+      display: inline-block;
+      margin: 10px 0px 10px 12px;
+   }
+
+   #restaurants-list article {
+      min-height: 418px;
+   }
+}
+
+
+
+@media screen and (min-width: 801px) {
+   #maincontent {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+   }
+
+      /*==================== Info Container =====================*/
+
+   #info-container {
+      width: 37%;
+      order: 0;
+   }
+
+   .filter-options {
+      height: 125px;
+      position: relative;
+      z-index: 950;
+      box-shadow: 0px 1px 2px #bbb;
+   }
+
+   .filter-options h2 {
+      margin: 0;
+   }
+
+   .filter-options select {
+      display: block;
+      margin: 0 0 10px 0;
+      width: calc(100% - 10px);
+   }
+
+   #restaurants-list {
+      overflow: auto;
+      height: calc(100vh - 205px);
+      padding: 10px;
+   }
+
+   #restaurants-list .restaurant_img
+   {
+      max-height: 400px;
+   }
+
+   #restaurants-list li {
+		width: 100%;
+		margin: 0 0px 20px 0;
+	}
+
+   #restaurants-list article {
+      min-height: 400px;
+   }
+
+   #add-review-fab {
+      display: none;
+   }
+
+   #add-review-button {
+      display: block;
+   }
+
+   /*==================== Map =====================*/
+
+   #map-container {
+      width:63%;
+      order: 1;
+   }
+
+   #map {
+      height: calc(100vh - 80px)
+   }
+}
+
+
+
+@media screen and (min-width: 951px) {
+   /*==================== Map =====================*/
+   #map-container {
+      width: 50%;
+   }
+
+
+   /*==================== Info Container =====================*/
+
+   #info-container {
+      width: 50%;
+   }
+
+   .filter-options {
+      height: 70px;
+   }
+
+   .filter-options select {
+      display: inline-block;
+      margin: 0px 10px 10px 0;
+      width: calc(50% - 8px);
+   }
+
+   .filter-options select:last-of-type {
+      margin: 0;
+   }
+
+   #restaurants-list {
+      overflow: auto;
+      height: calc(100vh - 150px);
+      padding: 10px;
+   }
+
+   #restaurants-list li {
+		width: calc(50% - 10px);
+		margin: 0 20px 20px 0;
+	}
+	#restaurants-list li:nth-child(even) {
+		margin: 0 0 20px 0;
+	}
+
+   #restaurants-list article {
+      min-height: 360px;
+   }
+
+   #restaurants-list .restaurant-img {
+      min-height: 150px;
+   }
+}
+
+@media screen and (min-width: 1401px) {
+   #map-container {
+      width: 60%;
+   }
+
+   #info-container {
+      width: 40%;
+   }
+}
