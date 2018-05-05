@@ -1,10 +1,16 @@
 const IDB_NAME = "restaurants";
+const FAVORITE_SYNC_STORE = "favorite_sync";
 
 let dbPromise = idb.open("restaurant_review_(stage_2)", 1, (db) => {
    if (!db.objectStoreNames.contains(IDB_NAME))
       db.createObjectStore(IDB_NAME, {
          keyPath: 'id'
       });
+	if (!db.objectStoreNames.contains(FAVORITE_SYNC_STORE))
+	   db.createObjectStore(FAVORITE_SYNC_STORE, {
+	      keyPath: 'id'
+	   });
+
 });
 
 function writeData(storeName, data) {

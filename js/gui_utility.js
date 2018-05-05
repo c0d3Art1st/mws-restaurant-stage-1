@@ -15,3 +15,13 @@ function showSnackbar(message) {
 		snackbar.classList.remove("visible");
 	}, 4000)
 }
+
+function toggleFavoriteButton(e, isFavorite) {
+	if (isFavorite === "true") {
+		e.target.classList.remove("favorite");
+		e.target.classList.add("not-favorite");
+	} else {
+		e.target.classList.remove("not-favorite");
+		e.target.classList.add("favorite");
+	}
+}

@@ -41,7 +41,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', function(event) {
-	console.log('[Service Worker] Activating Service Worker ....', event);
+	console.log('[Service Worker] Activating Service Worker ...');
 	event.waitUntil(
 		caches.keys()
 		.then(function(keyList) {
@@ -54,6 +54,40 @@ self.addEventListener('activate', function(event) {
 		})
 	);
 	return self.clients.claim();
+});
+
+self.addEventListener('sync', event => {
+	console.log("[Service Worker] Background Syncing...");
+	event.waitUntil(
+		readAllData(FAVORITE_SYNC_STORE)
+		.then(data => {
+			// sync each stored favorite sync request
+			for (let dt of data) {
+				let favoriteVal = (dt.is_favorite === "true") ? "false" : "true";
+				fetch(`http://localhost:1337/restaurants/${dt.id}/?is_favorite=${favoriteVal}`, {
+					method: "PUT"
+				})
+				.then(res => {
+					// update currently cached info of restaurant
+					let tempRes = {};
+					readData(IDB_NAME, dt.id)
+					.then(res => {
+						tempRes = res;
+						tempRes.is_favorite = favoriteVal;
+						return deleteItem(IDB_NAME, dt.id);
+					})
+					.then(res => {
+						writeData(IDB_NAME, tempRes);
+					});
+					// deleted store sync-request from cache
+					deleteItem(FAVORITE_SYNC_STORE, dt.id);
+			   })
+			 }
+		})
+		.catch(err => {
+			console.log("Error while doing background-sync: ", err);
+		})
+	);
 });
 
 self.addEventListener('fetch', event => {
@@ -136,11 +170,10 @@ updateRestaurantsFromNetwork = (request) => {
 					return clonedRes.json();
 				})
 				.then(data => {
-					let id = 1;
 					for (let key in data) {
 						let current = data[key];
 						let tmp = {};
-						tmp.id = id;
+						tmp.id = current.id;
 						tmp.name = current.name;
 						tmp.neighborhood = current.neighborhood;
 						tmp.operating_hours = current.operating_hours;
@@ -149,8 +182,8 @@ updateRestaurantsFromNetwork = (request) => {
 						tmp.latlng = current.latlng;
 						tmp.cuisine_type = current.cuisine_type;
 						tmp.reviews = current.reviews;
-						writeData(IDB_NAME, tmp)
-						id++;
+						tmp.is_favorite = current.is_favorite
+						writeData(IDB_NAME, tmp);
 					}
 				});
 			return response;
