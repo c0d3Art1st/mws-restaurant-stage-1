@@ -89,9 +89,14 @@
    width: 100vw;
    height: calc(100vh - 80px);
    background: white;
-   /* transform: translateY(100vh); */
+   transform: translateY(100vh);
    transition: transform ease-in-out .5s;
    overflow-y: scroll;
+   box-shadow: 0 3px 6px 0px #aaa;
+}
+
+#review-dlg.visible {
+   transform: translateY(0px);
 }
 
 #review-dlg h3 {
@@ -407,6 +412,25 @@ label {
    #add-review-button {
       display: block;
    }
+
+   /*=================== Review Dialog ========================*/
+   #review-dlg {
+      position: fixed;
+      padding: 0 13px 13px 13px;
+      z-index: 1100;
+      top: calc((100vh / 2) - 23vh);
+      left: calc((100vw / 2) - 35vw);
+      width: 70vw;
+      height: 46vh;
+      background: white;
+      transform: scale(0.01);
+      transition: transform ease-in-out .4s;
+      overflow-y: hidden;
+   }
+
+   #review-dlg .visible {
+      transform: scale(1.0);
+   }
 }
 
 
@@ -430,9 +454,6 @@ label {
    .inside #info-container {
       width: 50%;
    }
-
-   /*=================== Review Dialog ========================*/
-   
 }
 
 

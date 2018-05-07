@@ -1,8 +1,11 @@
 let restaurant;
 var map;
 let loadMapButton;
-let reviewButtons = [];
+let reviewButton;
 let reviewDlg;
+let usernameTextBox = null;
+let ratingTextBox = null;
+let commentTextBox = null;
 
 /**
  * Fill Breadcrumb in offline mode, when G-maps is not available
@@ -25,20 +28,49 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	};
 
 	reviewDlg = document.querySelector("#review-dlg");
-	reviewButtons.push(document.querySelector('#add-review-fab'));
-	reviewButtons.forEach((but) => {
+	reviewButton = document.querySelector('#add-review-fab');
+	reviewButton.onclick = initReviewDialog;
+	document.querySelectorAll(".cancel-button").forEach((but) => {
 		but.onclick = () => {
-			reviewDlg.style.transform = "translateY(0px)";
+			reviewDlg.classList.remove("visible");
 		};
 	})
 
-	document.querySelectorAll(".cancel-button").forEach((but) => {
-		but.onclick = () => {
-			console.log("cancel clicked")
-			reviewDlg.style.transform = "translateY(100vh)";
-		};
-	})
+	document.querySelector(".send-button").onclick = () => {
+		let date = new Date();
+		const monthNames = [
+		    "January", "February", "March",
+		    "April", "May", "June", "July",
+		    "August", "September", "October",
+		    "November", "December"
+		  ];
+		let review = {
+			id : self.restaurant.id,
+			name: usernameTextBox.value,
+			rating: ratingTextBox.value,
+			comments: commentTextBox.value,
+			date: `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+		}
+
+		document.querySelector("#reviews-list").append(createReviewHTML(review));
+
+		// close reviewDlg
+		reviewDlg.classList.remove("visible");
+	}
 });
+
+function initReviewDialog() {
+	if (usernameTextBox == null || ratingTextBox == null | commentTextBox == null) {
+		usernameTextBox = document.querySelector('#username');
+		ratingTextBox = document.querySelector("#rating");
+		commentTextBox = document.querySelector("#review");
+	}
+	usernameTextBox.value = "";
+	ratingTextBox.value = "";
+	commentTextBox.value = "";
+
+	reviewDlg.classList.add("visible");
+}
 
 /*
  * Loads live version of google-maps, creates/hides corresponding info messages
@@ -249,16 +281,14 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
    const title = document.createElement('h2');
    title.innerHTML = 'Reviews';
    title.setAttribute("aria-label", `Reviews for restaurant ${self.restaurant.name}`)
-   container.appendChild(title);
+   container.prepend(title);
 
 	const reviewButton = document.createElement("div");
 	reviewButton.setAttribute("id", "add-review-button");
 	reviewButton.setAttribute("role", "button");
 	reviewButton.setAttribute("tabindex", "0");
 	reviewButton.innerHTML = "add review";
-	reviewButton.onclick = () => {
-		reviewDlg.style.transform = "translateY(0px)";
-	};
+	reviewButton.onclick = initReviewDialog;
 	container.appendChild(reviewButton);
 
    if (!reviews) {

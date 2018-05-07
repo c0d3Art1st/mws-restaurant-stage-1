@@ -59,6 +59,7 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('sync', event => {
 	console.log("[Service Worker] Background Syncing...");
+	console.log("event: ", event);
 	event.waitUntil(
 		readAllData(FAVORITE_SYNC_STORE)
 		.then(data => {
