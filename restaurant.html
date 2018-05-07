@@ -55,11 +55,30 @@
 
 	<div id="add-review-fab" tabindex="0" role="button" aria-label="create review"></div>
 
+	<div id="review-dlg">
+		<button class="cancel-button">X</button>
+		<h3 id="review-dlg-header">Review for Emily's Pizza</h3>
+		<div>
+			<label for="username">username</label>
+			<input id="username" type="text" />
+		</div>
+		<div>
+			<label class="rating-label" for="rating">rating</label>
+			<input id="rating" class="rating-input" type="text" /><span> / 5</span>
+		</div>
+		<div>
+			<label for="review">review</label>
+			<textarea id="review" rows="5" cols="48" resize=none ></textarea>
+		</div>
+		<button class="send-button">Send</button>
+		<button class="cancel-button">Cancel</button>
+	</div>
+
    <!--******************   scripts   ************************-->
 	<script src="js/idb.js"></script>
 	<script src="js/idb_utility.js"></script>
 	<script src="js/gui_utility.js"></script>
-   <script src="js/app.js"></script>
+   <!-- <script src="js/app.js"></script> -->
    <script src="js/dbhelper.js"></script>
    <script src="js/restaurant_info.js"></script>
 

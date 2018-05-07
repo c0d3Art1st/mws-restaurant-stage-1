@@ -1,6 +1,9 @@
 let restaurant;
 var map;
 let loadMapButton;
+let reviewButtons = [];
+let reviewDlg;
+
 /**
  * Fill Breadcrumb in offline mode, when G-maps is not available
  */
@@ -20,6 +23,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		if(event.keyCode == 13)
 			loadMap();
 	};
+
+	reviewDlg = document.querySelector("#review-dlg");
+	reviewButtons.push(document.querySelector('#add-review-fab'));
+	reviewButtons.forEach((but) => {
+		but.onclick = () => {
+			reviewDlg.style.transform = "translateY(0px)";
+		};
+	})
+
+	document.querySelectorAll(".cancel-button").forEach((but) => {
+		but.onclick = () => {
+			console.log("cancel clicked")
+			reviewDlg.style.transform = "translateY(100vh)";
+		};
+	})
 });
 
 /*
@@ -238,6 +256,9 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 	reviewButton.setAttribute("role", "button");
 	reviewButton.setAttribute("tabindex", "0");
 	reviewButton.innerHTML = "add review";
+	reviewButton.onclick = () => {
+		reviewDlg.style.transform = "translateY(0px)";
+	};
 	container.appendChild(reviewButton);
 
    if (!reviews) {
