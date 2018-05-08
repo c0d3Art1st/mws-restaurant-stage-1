@@ -214,7 +214,14 @@ nav h1 a {
    color: white;
    font:  20px "sans-serif";
    border: none;
+   cursor: pointer;
 }
+
+.favorite:hover,
+.not-favorite:hover {
+   border: 2px solid #99caec;
+}
+
 
 .favorite {
    background: #3397DB no-repeat right center url("../img/ic_star_white_18dp.png");;}

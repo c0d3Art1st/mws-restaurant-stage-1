@@ -63,7 +63,8 @@
    border-radius: 10px;
    background: #3397DB no-repeat right center url("../img/ic_add_white_48pt.png");
    background-size: 26px 26px;
-   color: #eee
+   color: #eee;
+   cursor: pointer;
 }
 
 #add-review-fab {
@@ -78,6 +79,15 @@
    box-shadow: 0 2px 3px 0px #555;
    background: #3397DB no-repeat center url("../img/ic_add_white_48pt.png");
    background-size: 36px 36px;
+}
+
+#add-review-fab:hover,
+#add-review-button:hover {
+   border: 2px solid #99caec;
+}
+
+#add-review-button:hover {
+   padding: 10px 10px;
 }
 
 #review-dlg {
