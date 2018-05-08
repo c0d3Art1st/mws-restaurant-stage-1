@@ -65,6 +65,9 @@
    background-size: 26px 26px;
    color: #eee;
    cursor: pointer;
+   border: none;
+   font-size: 15px;
+   text-align: left;
 }
 
 #add-review-fab {

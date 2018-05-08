@@ -359,9 +359,9 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
    title.setAttribute("aria-label", `Reviews for restaurant ${self.restaurant.name}`)
    container.prepend(title);
 
-	const reviewButton = document.createElement("div");
+	const reviewButton = document.createElement("button");
 	reviewButton.setAttribute("id", "add-review-button");
-	reviewButton.setAttribute("role", "button");
+	// reviewButton.setAttribute("role", "button");
 	reviewButton.setAttribute("tabindex", "0");
 	reviewButton.innerHTML = "add review";
 	reviewButton.onclick = initReviewDialog;
