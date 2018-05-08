@@ -423,7 +423,7 @@ label {
       width: 70vw;
       height: 46vh;
       background: white;
-      transform: scale(0.01);
+      transform: scale(0.001);
       transition: transform ease-in-out .4s;
       overflow-y: hidden;
    }
