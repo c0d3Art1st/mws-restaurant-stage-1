@@ -130,7 +130,15 @@
 }
 
 #review-dlg .rating-input {
-   width: 50px;
+   width: 35px;
+   font-size: 20px;
+   text-align: center;
+   font-weight: bold;
+}
+
+#rating-range {
+   font-weight: bold;
+   font-size: 20px;
 }
 
 
@@ -156,15 +164,36 @@ label {
    color: #eee;
    font: 16px "Roboto", "sans-serif";
    background: grey;
-   border: 2px solid grey;
+   border: none;
    border-radius: 8px;
+   cursor: pointer;
 }
 
-#review-dlg .cancel-button{
+#review-dlg .cancel-button {
+   font-size: 14px;
+}
+
+#review-dlg .top-cancel-button{
+   position: relative;
+   top: 5px;
+   right: -10px;
+   padding: 15px;
+   width: 50px;
+   height: 50px;
+   font-size: 28px;
+   background: white;
+   background: transparent;
+   border: none;
+   color: gray;
+   padding: 0 15px;
+   margin-right: 0;
 }
 
 #review-dlg .send-button{
    margin-right: 5px;
+   padding: 10px 20px;
+   font-weight: bold;
+   background: #3397DB
 }
 
 /* ====================== Restaurant Details ====================== */
