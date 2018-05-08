@@ -6,6 +6,8 @@ let reviewDlg;
 let usernameTextBox = null;
 let ratingTextBox = null;
 let commentTextBox = null;
+let reviewSyncId = 1;
+let reviewDataRecevied = false;
 
 /**
  * Fill Breadcrumb in offline mode, when G-maps is not available
@@ -37,23 +39,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	})
 
 	document.querySelector(".send-button").onclick = () => {
-		let date = new Date();
-		const monthNames = [
-		    "January", "February", "March",
-		    "April", "May", "June", "July",
-		    "August", "September", "October",
-		    "November", "December"
-		  ];
 		let review = {
-			id : self.restaurant.id,
+			restaurant_id : self.restaurant.id,
 			name: usernameTextBox.value,
 			rating: ratingTextBox.value,
 			comments: commentTextBox.value,
-			date: `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+			createdAt: new Date().getTime()
 		}
 
-		document.querySelector("#reviews-list").append(createReviewHTML(review));
-
+		// document.querySelector("#reviews-list").append(createReviewHTML(review));
+		addReview(review);
 		// close reviewDlg
 		reviewDlg.classList.remove("visible");
 	}
@@ -70,6 +65,53 @@ function initReviewDialog() {
 	commentTextBox.value = "";
 
 	reviewDlg.classList.add("visible");
+}
+
+function addReview(review) {
+	// add review to gui
+	document.querySelector("#reviews-list").append(createReviewHTML(review));
+
+	// check for background Syncing
+	if ('serviceWorker' in navigator && 'SyncManager' in window) {
+	 navigator.serviceWorker.ready.then((sw) => {
+
+		 // update cached version of restaurant
+		 let restaurant = self.restaurant;
+		 readData(REVIEW_STORE, self.restaurant.id)
+		 .then(result => {
+			 // restaurant = result;
+
+			 let tmp = {};
+			 readData(REVIEW_STORE, restaurant.id)
+			 .then(res => {
+				 tmp = res;
+				 if (tmp.reviews == undefined)
+			   	 tmp.reviews = [];
+				 tmp.reviews.push(review);
+				 return deleteItem(REVIEW_STORE, restaurant.id);
+			 })
+			 .then(res => {
+				 writeData(REVIEW_STORE, tmp);
+			 });
+			 console.log("writing sync request");
+			 writeData(REVIEW_SYNC_STORE, {id: reviewSyncId, review: review})
+			 .then(() => {
+				 reviewSyncId++;
+				 sw.sync.register('sync-new-review');
+			 })
+			 .then(() => {
+				 DBHelper.isDbReachable()
+				 .then(() => {
+						 showSnackbar(`Review added for '${restaurant.name}''`);
+				 })
+				 .catch(error => {
+					 showSnackbar("Offline: Request stored for syncing!");
+				 });
+			 });
+		 });
+		 // create sync-task and register it
+	 });
+	}
 }
 
 /*
@@ -128,8 +170,42 @@ fetchRestaurantFromURL = (callback) => {
             console.error(error);
             return;
          }
-         fillRestaurantHTML();
-         callback(null, restaurant)
+
+			reviewDataRecevied = false;
+			// get reviews from network
+			fetch(`http://localhost:1337/reviews/?restaurant_id=${self.restaurant.id}`)
+			.then(res => {
+				return res.json();
+			})
+			.then(review_data => {
+				reviewDataRecevied = true;
+				self.restaurant.reviews = review_data;
+				console.log("FROM WEB: ", self.restaurant.reviews);
+
+				fillRestaurantHTML();
+	         callback(null, restaurant)
+			})
+			.catch(error => {
+	 		  console.log("[DbHelper.js] ERROR while fetching reviews...", error);
+		  });
+        //
+			// get reviews from idb
+			console.log("ID: ", self.restaurant.id);
+			readData(REVIEW_STORE, self.restaurant.id)
+			.then(data => {
+				if (data !== undefined) {
+					console.log("FROM CACHE: ", data);
+					self.restaurant.reviews = data.reviews;
+
+					if(!reviewDataRecevied) {
+						fillRestaurantHTML();
+		         	callback(null, restaurant)
+					}
+				}
+			})
+			.catch(error => {
+				console.log("[ServiceWorker] ERROR while fetching idb-data: ", error);
+			})
       });
    }
 }
@@ -321,8 +397,19 @@ createReviewHTML = (review) => {
 
    const date = document.createElement('p');
    date.classList.add("review-date");
-   date.innerHTML = review.date;
-   reviewHeader.appendChild(date);
+
+
+	const monthNames = [
+		 "January", "February", "March",
+		 "April", "May", "June", "July",
+		 "August", "September", "October",
+		 "November", "December"
+	  ];
+	let createdAt = new Date(review.createdAt)
+   date.innerHTML = `${monthNames[createdAt.getMonth()]} ${createdAt.getDate()}, ${createdAt.getFullYear()}`;
+	// date.innerHTML = review.createdAt;
+
+	reviewHeader.appendChild(date);
 
    li.appendChild(reviewHeader);
 

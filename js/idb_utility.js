@@ -1,13 +1,23 @@
-const IDB_NAME = "restaurants";
-const FAVORITE_SYNC_STORE = "favorite_sync";
+const RESTAURANT_STORE = "restaurant_store";
+const REVIEW_STORE = "review_store"
+const FAVORITE_SYNC_STORE = "favorite_sync_store";
+const REVIEW_SYNC_STORE = "review_sync_store";
 
-let dbPromise = idb.open("restaurant_review_(stage_2)", 1, (db) => {
-   if (!db.objectStoreNames.contains(IDB_NAME))
-      db.createObjectStore(IDB_NAME, {
+let dbPromise = idb.open("restaurant_review_(stage_3)", 1, (db) => {
+   if (!db.objectStoreNames.contains(RESTAURANT_STORE))
+      db.createObjectStore(RESTAURANT_STORE, {
          keyPath: 'id'
       });
+	if (!db.objectStoreNames.contains(REVIEW_STORE))
+      db.createObjectStore(REVIEW_STORE, {
+	      keyPath: 'id'
+	   });
 	if (!db.objectStoreNames.contains(FAVORITE_SYNC_STORE))
 	   db.createObjectStore(FAVORITE_SYNC_STORE, {
+	      keyPath: 'id'
+	   });
+	if (!db.objectStoreNames.contains(REVIEW_SYNC_STORE))
+	   db.createObjectStore(REVIEW_SYNC_STORE, {
 	      keyPath: 'id'
 	   });
 

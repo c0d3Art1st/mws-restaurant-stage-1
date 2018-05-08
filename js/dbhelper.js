@@ -29,6 +29,16 @@ class DBHelper {
 		});
   }
 
+  static fetchRestaurantReviews(restaurant_id) {
+	  return fetch(`http://localhost:1337/reviews/?restaurant_id=${restaurant_id}`)
+	  .then(reviews => {
+		  return reviews.json();
+	  })
+	  .catch(error => {
+		  console.log("[DbHelper.js] ERROR while fetching reviews...", error);
+	  })
+  }
+
   /**
    * Fetch a restaurant by its ID.
    */
@@ -178,7 +188,7 @@ class DBHelper {
   		navigator.serviceWorker.ready.then((sw) => {
   		let restaurant = {};
   		// get updated version of bound restaurant from cache
-  		readData(IDB_NAME, restaurant_src.id)
+  		readData(RESTAURANT_STORE, restaurant_src.id)
   		.then((result) => {
   			restaurant = result;
   			// toggle button appearance
@@ -186,14 +196,14 @@ class DBHelper {
 
 			// update currently cached info of restaurant
 			let tmp = {};
-			readData(IDB_NAME, restaurant.id)
+			readData(RESTAURANT_STORE, restaurant.id)
 			.then(res => {
 				tmp = res;
 				tmp.is_favorite = (restaurant.is_favorite === "true") ? "false" : "true";
-				return deleteItem(IDB_NAME, restaurant.id);
+				return deleteItem(RESTAURANT_STORE, restaurant.id);
 			})
 			.then(res => {
-				writeData(IDB_NAME, tmp);
+				writeData(RESTAURANT_STORE, tmp);
 			});
 
   			// write sync-task to idb

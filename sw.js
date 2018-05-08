@@ -59,26 +59,62 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('sync', event => {
 	console.log("[Service Worker] Background Syncing...");
-	console.log("event: ", event);
-	event.waitUntil(
-		readAllData(FAVORITE_SYNC_STORE)
-		.then(data => {
-			// sync each stored favorite sync request
-			for (let dt of data) {
-				let favoriteVal = (dt.is_favorite === "true") ? "false" : "true";
-				fetch(`http://localhost:1337/restaurants/${dt.id}/?is_favorite=${favoriteVal}`, {
-					method: "PUT"
-				})
-				.then(res => {
-					deleteItem(FAVORITE_SYNC_STORE, dt.id);
-			   })
-			 }
-		})
-		.catch(err => {
-			console.log("Error while doing background-sync: ", err);
-		})
-	);
+	if (event.tag === "sync-new-favorite") {
+		event.waitUntil(syncFavorRequest());
+	} else {
+		event.waitUntil(syncReviewRequest());
+	}
+
 });
+
+function syncReviewRequest() {
+	console.log("...syncing review requests")
+	readAllData(REVIEW_SYNC_STORE)
+	.then(data => {
+		// sync each stored favorite sync request
+		for (let dt of data) {
+			console.log("review to be synced: ", dt.review);
+			fetch(`http://localhost:1337/reviews/`, {
+				method: "POST",
+				headers: new Headers({
+					"Content-Type": "application/json",
+					"Accept": "application/json"
+				}),
+				body: JSON.stringify(dt.review)
+			})
+			.then(res => {
+				console.log("result after posting review: ", res);
+				deleteItem(REVIEW_SYNC_STORE, dt.id);
+			})
+			.catch(err => {
+				console.log("error while posting review: ", error);
+			})
+		 }
+	})
+	.catch(err => {
+		console.log("Error while doing background-sync: ", err);
+	})
+}
+
+function syncFavorRequest() {
+	console.log("...syncing favor requests")
+	readAllData(FAVORITE_SYNC_STORE)
+	.then(data => {
+		// sync each stored favorite sync request
+		for (let dt of data) {
+			let favoriteVal = (dt.is_favorite === "true") ? "false" : "true";
+			fetch(`http://localhost:1337/restaurants/${dt.id}/?is_favorite=${favoriteVal}`, {
+				method: "PUT"
+			})
+			.then(res => {
+				deleteItem(FAVORITE_SYNC_STORE, dt.id);
+			})
+		 }
+	})
+	.catch(err => {
+		console.log("Error while doing background-sync: ", err);
+	})
+}
 
 self.addEventListener('fetch', event => {
 	let requestUrl = new URL(event.request.url);
@@ -86,28 +122,40 @@ self.addEventListener('fetch', event => {
 	if (!isTestRequest(requestUrl) &&
 		 !isGoogleMapsOrigin(requestUrl.origin)) {
 		// cache local content - CACHE FIRST NETWORK FALLBACK
-		if (isRestaurantDataRequest(requestUrl.origin)) {
-			event.respondWith(serveIdbData(event.request));
+		if (isRestaurantReviewRequest(requestUrl.pathname)) {
+			console.log("Fetching Review-data: ", requestUrl.pathname);
+			event.respondWith(serveReviewData(event.request));
+		}
+		else if (isRestaurantDataRequest(requestUrl.pathname)) {
+			event.respondWith(serveRestaurantData(event.request));
 		} else {
 			event.respondWith(serveCachedData(event.request));
 		}
 	}
 });
 
+
 /**
  * Strategy for dynamic data (restaurant-info from node-server)
  */
-serveIdbData = (request) => {
-	return readAllData(IDB_NAME)
+serveReviewData = (request) => {
+	return updateReviewsFromNetwork(request);
+}
+
+/**
+ * Strategy for dynamic data (restaurant-info from node-server)
+ */
+serveRestaurantData = (request) => {
+	return readAllData(RESTAURANT_STORE)
 	.then(data => {
 		if (data.length > 0) {
-			var blob = new Blob([JSON.stringify(data, null, 2)], {
+			var responseBlob = new Blob([JSON.stringify(data, null, 2)], {
 				type: 'application/json'
 			});
-			var init = { 'status': 200, 'statusText': 'super-Great'};
+			var responseInit = { 'status': 200, 'statusText': 'restaurant data OK'};
 			// try network-fetch to update idb
 			updateRestaurantsFromNetwork(request)
-			return new Response(blob, init);
+			return new Response(responseBlob, responseInit);
 		} else {
 			return updateRestaurantsFromNetwork(request);
 		}
@@ -150,31 +198,39 @@ serveCachedData = (request) => {
 }
 
 /**
+ * Retrieves Restraurant-Reviews from network and updated IndexedDB with it
+ */
+updateReviewsFromNetwork = (request) => {
+	let request_id = parseInt(request.url.substr(request.url.indexOf('=') + 1, request.url.length));
+	let clonedResponse = null;
+	return fetch(request)
+	.then(res => {
+		clonedResponse = res.clone();
+		return res.json();
+	})
+	.then(data => {
+		return writeData(REVIEW_STORE, {id: request_id, reviews: data})
+	})
+	.then(() => {
+		return clonedResponse;
+	})
+}
+
+/**
  * Retrieves Restraurant-info from network and updated IndexedDB with it
  */
 updateRestaurantsFromNetwork = (request) => {
 	return fetch(request)
 		.then(response => {
 			let clonedRes = response.clone();
-			clearAllData(IDB_NAME)
+			clearAllData(RESTAURANT_STORE)
 				.then(() => {
 					return clonedRes.json();
 				})
 				.then(data => {
 					for (let key in data) {
 						let current = data[key];
-						let tmp = {};
-						tmp.id = current.id;
-						tmp.name = current.name;
-						tmp.neighborhood = current.neighborhood;
-						tmp.operating_hours = current.operating_hours;
-						tmp.photograph = current.photograph;
-						tmp.address = current.address;
-						tmp.latlng = current.latlng;
-						tmp.cuisine_type = current.cuisine_type;
-						tmp.reviews = current.reviews;
-						tmp.is_favorite = current.is_favorite
-						writeData(IDB_NAME, tmp);
+						writeData(RESTAURANT_STORE, current);
 					}
 				});
 			return response;
@@ -215,6 +271,13 @@ isGoogleMapsOrigin = (origin) => {
 /**
  * Determines if requested resource is restaurant-info from node-server
  */
-isRestaurantDataRequest = (origin) => {
-	return origin.startsWith('http://localhost:1337');
+isRestaurantDataRequest = (pathname) => {
+	return pathname === "/restaurants";
+}
+
+/**
+ * Determines if requested resource is restaurant-info from node-server
+ */
+isRestaurantReviewRequest = (pathname) => {
+	return pathname === "/reviews/";
 }
