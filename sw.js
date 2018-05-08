@@ -209,6 +209,7 @@ updateReviewsFromNetwork = (request) => {
 		return res.json();
 	})
 	.then(data => {
+		data.sort(compareReview);
 		return writeData(REVIEW_STORE, {id: request_id, reviews: data})
 	})
 	.then(() => {

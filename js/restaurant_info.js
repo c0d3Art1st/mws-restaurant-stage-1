@@ -60,6 +60,7 @@ function initReviewDialog() {
 		ratingTextBox = document.querySelector("#rating");
 		commentTextBox = document.querySelector("#review");
 	}
+	document.querySelector("#review-restaurant-name").innerHTML=self.restaurant.name;
 	usernameTextBox.value = "";
 	ratingTextBox.value = "";
 	commentTextBox.value = "";
@@ -69,7 +70,7 @@ function initReviewDialog() {
 
 function addReview(review) {
 	// add review to gui
-	document.querySelector("#reviews-list").append(createReviewHTML(review));
+	document.querySelector("#reviews-list").prepend(createReviewHTML(review));
 
 	// check for background Syncing
 	if ('serviceWorker' in navigator && 'SyncManager' in window) {
@@ -179,6 +180,7 @@ fetchRestaurantFromURL = (callback) => {
 			})
 			.then(review_data => {
 				reviewDataRecevied = true;
+				review_data.sort(compareReview);
 				self.restaurant.reviews = review_data;
 				console.log("FROM WEB: ", self.restaurant.reviews);
 
@@ -195,6 +197,7 @@ fetchRestaurantFromURL = (callback) => {
 			.then(data => {
 				if (data !== undefined) {
 					console.log("FROM CACHE: ", data);
+					data.reviews.sort(compareReview);
 					self.restaurant.reviews = data.reviews;
 
 					if(!reviewDataRecevied) {

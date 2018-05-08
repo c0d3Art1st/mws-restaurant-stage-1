@@ -78,3 +78,11 @@ function deleteItem(storeName, ItemId) {
       store.delete(ItemId);
    });
 }
+
+function compareReview(a, b) {
+	if (a.createdAt > b.createdAt)
+		return -1;
+	if (a.createdAt < b.createdAt)
+		return 1;
+	return 0;
+}
