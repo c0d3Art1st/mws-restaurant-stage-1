@@ -44,10 +44,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			createdAt: new Date().getTime()
 		}
 
-		// document.querySelector("#reviews-list").append(createReviewHTML(review));
-		addReview(review);
-		// close reviewDlg
-		closeReviewDlg();
+		if (usernameTextBox.value !== "" &&
+			 ratingTextBox.value !== "" &&
+			 commentTextBox.value !== "") {
+			addReview(review);
+			closeReviewDlg();
+		}
+		else {
+			showSnackbar("Review not sent. Please provide username, rating & comment!");
+		}
 	}
 });
 
