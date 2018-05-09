@@ -8,7 +8,7 @@ function showSnackbar(message) {
 	if (snackbarId !== null) {
 		clearTimeout(snackbarId);
 	}
-	snackbar.textContent = message;
+	snackbar.innerHTML = message;
 	snackbar.classList.add("visible");
 	snackbarId = setTimeout(() => {
 		snackbar.textContent = "";

@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			closeReviewDlg();
 		}
 		else {
-			showSnackbar("Review not sent. Please provide username, rating & comment!");
+			showSnackbar("Review not sent.<br>Please provide username, rating & comment!");
 		}
 	}
 });
