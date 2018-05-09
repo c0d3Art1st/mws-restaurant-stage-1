@@ -1,11 +1,11 @@
-# Restaurant Reviews(Stage 2)
+# Restaurant Reviews(Stage 3)
 
 **Restaurant Reviews** is a three-stage course material project and part of [Udacity](https://www.udacity.com/)'s new [Mobile Web Specialist](https://www.udacity.com/course/mobile-web-specialist-nanodegree--nd024) Nanodegree. It is a simple Google Maps-like web-app that offers the user reviews and information about restaurants in New York. It has been implemented with a mobile-first approach that uses responsiveness and caching to make the web-app feel and display well on a range of devices with different screen sizes.
 
 ---
-### Project Overview: Stage 2
+### Project Overview: Stage 3
 
-For stage 2 of the **Restaurant Reviews** projects, the conversion of a static webpage to a mobile ready web application has to be driven even further. Restaurant data is to be requested from a node-server and the returned JSON to be parsed. The information is to be stored via indexedDB. Thereafter the app is to be evaluated by the Lighthouse audition tool of the Chrome Developer Tools. A score of 90%+ on Progressive Web Apps and A11y and 70%+ on Performance must be achieved.
+For stage 3 of the **Restaurant Reviews** projects, the conversion of a static webpage to a mobile ready web application has to be driven even further. Users shall be enabled to favor and submit a review for a Restaurant. All this needs to be functional online and offline via background-syncing. Additionally a score of 90%+ on Progressive Web Apps, A11y & Performance must be achieved in Google Lighthouse.
 
 
 
@@ -19,6 +19,8 @@ If you don't have Python installed, navigate to Python's [website](https://www.p
 2. Download the [Node-Server](https://github.com/udacity/mws-restaurant-stage-2) Part of this exercise and follow the instruction in it's README-file
 
 3. With your servers running, visit the site: `http://localhost:8000`, and look around for a bit to see what the current experience looks like.
+
+4. To authentically test the background-syncing, testers have to go offline in Google Dev Tools AS WELL AS shutting down the internet-connection on their test-device for real, either per hardware or software. Otherwise the used background-sync API will not work as expected!
 
 
 
