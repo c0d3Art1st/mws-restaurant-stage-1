@@ -470,6 +470,7 @@ label {
       transform: scale(0.001);
       transition: transform ease-in-out .4s;
       overflow-y: hidden;
+      transition: width .2s ease-in-out;
    }
 
    #review-dlg .visible {
@@ -520,6 +521,11 @@ label {
    #restaurant-info-area {
       width: 50%;
    }
+
+   #review-dlg {
+      left: calc((100vw / 2) - 25vw);
+      width: 50vw;
+   }
 }
 
 
@@ -561,5 +567,10 @@ label {
 
    #restaurant-info-area {
       width: 50%;
+   }
+
+   #review-dlg {
+      left: calc((100vw / 2) - 18vw);
+      width: 36vw;
    }
 }
