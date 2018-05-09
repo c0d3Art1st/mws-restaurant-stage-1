@@ -468,9 +468,8 @@ label {
       height: 46vh;
       background: white;
       transform: scale(0.001);
-      transition: transform ease-in-out .4s;
+      transition: all ease-in-out .3s;
       overflow-y: hidden;
-      transition: width .2s ease-in-out;
    }
 
    #review-dlg .visible {

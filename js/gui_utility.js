@@ -16,6 +16,9 @@ function showSnackbar(message) {
 	}, 4000)
 }
 
+/*
+ * Toggles appearance of favorite button in GUI
+ */
 function toggleFavoriteButton(e, isFavorite) {
 	if (isFavorite === "true") {
 		e.target.classList.remove("favorite");

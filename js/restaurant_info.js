@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
          fillBreadcrumb();
       }
    });
+	// init map button
 	loadMapButton = document.querySelector("#load-map-button");
 	loadMapButton.onclick = (event) => {
 		loadMap()
@@ -30,37 +31,46 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			loadMap();
 	};
 
+	// init review-dlg-button
 	reviewDlg = document.querySelector("#review-dlg");
 	reviewButton = document.querySelector('#add-review-fab');
 	reviewButton.onclick = initReviewDialog;
-
-
-	document.querySelector(".send-button").onclick = () => {
-		let review = {
-			restaurant_id : self.restaurant.id,
-			name: usernameTextBox.value,
-			rating: ratingTextBox.value,
-			comments: commentTextBox.value,
-			createdAt: new Date().getTime()
-		}
-
-		if (usernameTextBox.value !== "" &&
-			 ratingTextBox.value !== "" &&
-			 commentTextBox.value !== "") {
-			addReview(review);
-			closeReviewDlg();
-		}
-		else {
-			showSnackbar("Review not sent.<br>Please provide username, rating & comment!");
-		}
-	}
 });
 
+/**
+ * Closes the Review dialog
+ */
 function closeReviewDlg() {
 	reviewDlg.classList.remove("visible");
 	focusedElementbeforeModal.focus();
 }
 
+/**
+ * Creates Review Object and sends it off to server
+ */
+function sendOffReview() {
+	let review = {
+		restaurant_id : self.restaurant.id,
+		name: usernameTextBox.value,
+		rating: ratingTextBox.value,
+		comments: commentTextBox.value,
+		createdAt: new Date().getTime()
+	}
+
+	if (usernameTextBox.value !== "" &&
+		 ratingTextBox.value !== "" &&
+		 commentTextBox.value !== "") {
+		addReview(review);
+		closeReviewDlg();
+	}
+	else {
+		showSnackbar("Review not sent.<br>Please provide username, rating & comment!");
+	}
+}
+
+/**
+ * Initializes Review-dialog
+ */
 function initReviewDialog() {
 	if (usernameTextBox == null || ratingTextBox == null | commentTextBox == null) {
 		usernameTextBox = document.querySelector('#username');
@@ -74,9 +84,12 @@ function initReviewDialog() {
 
 	focusedElementbeforeModal = document.activeElement;
 	reviewDlg.addEventListener("keydown", trapTabKey);
+
 	document.querySelectorAll(".cancel-button").forEach((but) => {
 		but.onclick = closeReviewDlg;
 	})
+
+	document.querySelector(".send-button").onclick = sendOffReview;
 
 	var focusableElementsString = 'a[href], area[href], input, select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
 	var focusableElements = reviewDlg.querySelectorAll(focusableElementsString);
@@ -111,6 +124,9 @@ function initReviewDialog() {
 	}
 }
 
+/**
+ * adds review to GUI and sets up sync-task to update reviews on server
+ */
 function addReview(review) {
 	// add review to gui
 	document.querySelector("#reviews-list").prepend(createReviewHTML(review));
@@ -137,7 +153,6 @@ function addReview(review) {
 			 .then(res => {
 				 writeData(REVIEW_STORE, tmp);
 			 });
-			 console.log("writing sync request");
 			 writeData(REVIEW_SYNC_STORE, {id: reviewSyncId, review: review})
 			 .then(() => {
 				 reviewSyncId++;
@@ -153,7 +168,6 @@ function addReview(review) {
 				 });
 			 });
 		 });
-		 // create sync-task and register it
 	 });
 	}
 }
@@ -225,7 +239,6 @@ fetchRestaurantFromURL = (callback) => {
 				reviewDataRecevied = true;
 				review_data.sort(compareReview);
 				self.restaurant.reviews = review_data;
-				console.log("FROM WEB: ", self.restaurant.reviews);
 
 				fillRestaurantHTML();
 	         callback(null, restaurant)
@@ -235,11 +248,9 @@ fetchRestaurantFromURL = (callback) => {
 		  });
         //
 			// get reviews from idb
-			console.log("ID: ", self.restaurant.id);
 			readData(REVIEW_STORE, self.restaurant.id)
 			.then(data => {
 				if (data !== undefined) {
-					console.log("FROM CACHE: ", data);
 					data.reviews.sort(compareReview);
 					self.restaurant.reviews = data.reviews;
 

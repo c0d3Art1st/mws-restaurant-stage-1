@@ -68,12 +68,10 @@ self.addEventListener('sync', event => {
 });
 
 function syncReviewRequest() {
-	console.log("...syncing review requests")
 	readAllData(REVIEW_SYNC_STORE)
 	.then(data => {
 		// sync each stored favorite sync request
 		for (let dt of data) {
-			console.log("review to be synced: ", dt.review);
 			fetch(`http://localhost:1337/reviews/`, {
 				method: "POST",
 				headers: new Headers({
@@ -83,7 +81,6 @@ function syncReviewRequest() {
 				body: JSON.stringify(dt.review)
 			})
 			.then(res => {
-				console.log("result after posting review: ", res);
 				deleteItem(REVIEW_SYNC_STORE, dt.id);
 			})
 			.catch(err => {
@@ -97,7 +94,6 @@ function syncReviewRequest() {
 }
 
 function syncFavorRequest() {
-	console.log("...syncing favor requests")
 	readAllData(FAVORITE_SYNC_STORE)
 	.then(data => {
 		// sync each stored favorite sync request
@@ -123,10 +119,8 @@ self.addEventListener('fetch', event => {
 		 !isGoogleMapsOrigin(requestUrl.origin)) {
 		// cache local content - CACHE FIRST NETWORK FALLBACK
 		if (isRestaurantReviewRequest(requestUrl.pathname)) {
-			console.log("Fetching Review-data: ", requestUrl.pathname);
 			event.respondWith(serveReviewData(event.request));
-		}
-		else if (isRestaurantDataRequest(requestUrl.pathname)) {
+		} else if (isRestaurantDataRequest(requestUrl.pathname)) {
 			event.respondWith(serveRestaurantData(event.request));
 		} else {
 			event.respondWith(serveCachedData(event.request));
@@ -136,7 +130,7 @@ self.addEventListener('fetch', event => {
 
 
 /**
- * Strategy for dynamic data (restaurant-info from node-server)
+ * Strategy for dynamic data (review-info from node-server)
  */
 serveReviewData = (request) => {
 	return updateReviewsFromNetwork(request);

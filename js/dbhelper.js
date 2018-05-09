@@ -29,6 +29,9 @@ class DBHelper {
 		});
   }
 
+  /**
+   * Fetch all Reviews for specific restaurant.
+   */
   static fetchRestaurantReviews(restaurant_id) {
 	  return fetch(`http://localhost:1337/reviews/?restaurant_id=${restaurant_id}`)
 	  .then(reviews => {
@@ -175,6 +178,9 @@ class DBHelper {
     return marker;
   }
 
+  /**
+   * Check if DB is reachable.
+   */
   static isDbReachable() {
 	  return fetch("http://localhost:1337/test", {
 	  });
@@ -209,7 +215,6 @@ class DBHelper {
   			// write sync-task to idb
   			writeData(FAVORITE_SYNC_STORE, {id: restaurant.id, is_favorite: restaurant.is_favorite})
   				.then(() => {
-  				// register sync-task in service worker and give it a TAG // so we can access it in the sw-code later
   					sw.sync.register('sync-new-favorite');
   				})
   				.then(() => {
@@ -228,9 +233,6 @@ class DBHelper {
   				});
   			  });
   		  });
-  	}
-  	else {
-  	// provide fallback for browsers that don't support the SyncManager // Just send the data via fetch-API!
-  	}
- }
+  		}
+ 	}
 }
