@@ -82,6 +82,11 @@ function initReviewDialog() {
 	ratingTextBox.value = "";
 	commentTextBox.value = "";
 
+	ratingTextBox.onblur = () => {
+		if (ratingTextBox.value > 5) ratingTextBox.value = 5;
+		if (ratingTextBox.value < 0) ratingTextBox.value = 0;
+	}
+
 	focusedElementbeforeModal = document.activeElement;
 	reviewDlg.addEventListener("keydown", trapTabKey);
 
