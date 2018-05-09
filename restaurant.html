@@ -56,7 +56,7 @@
 	<div id="add-review-fab" tabindex="0" role="button" aria-label="create review"></div>
 
 	<div id="review-dlg">
-		<button class="cancel-button top-cancel-button">X</button>
+		<button aria-label="close review dialog" class="cancel-button top-cancel-button">X</button>
 		<h3 id="review-dlg-header">How did you like <span id="review-restaurant-name"></span>?</h3>
 		<div>
 			<label for="username">username</label>
@@ -64,14 +64,14 @@
 		</div>
 		<div>
 			<label class="rating-label" for="rating">rating</label>
-			<input id="rating" class="rating-input" type="text" /><span id="rating-range"> / 5</span>
+			<input id="rating" aria-label="rating - enter 1 through 5 where 1 is poor and 5 is awesome" class="rating-input" type="text" /><span id="rating-range"> / 5</span>
 		</div>
 		<div>
-			<label for="review">review</label>
+			<label for="review">comments</label>
 			<textarea id="review" rows="5" cols="48" resize=none ></textarea>
 		</div>
-		<button class="send-button">Send</button>
-		<button class="cancel-button">Cancel</button>
+		<button class="send-button" aria-label="send review">Send</button>
+		<button class="cancel-button" aria-label="cancel & close review dialog">Cancel</button>
 	</div>
 
    <!--******************   scripts   ************************-->

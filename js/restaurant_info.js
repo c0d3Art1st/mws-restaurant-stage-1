@@ -8,6 +8,7 @@ let ratingTextBox = null;
 let commentTextBox = null;
 let reviewSyncId = 1;
 let reviewDataRecevied = false;
+let focusedElementbeforeModal;
 
 /**
  * Fill Breadcrumb in offline mode, when G-maps is not available
@@ -32,11 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 	reviewDlg = document.querySelector("#review-dlg");
 	reviewButton = document.querySelector('#add-review-fab');
 	reviewButton.onclick = initReviewDialog;
-	document.querySelectorAll(".cancel-button").forEach((but) => {
-		but.onclick = () => {
-			reviewDlg.classList.remove("visible");
-		};
-	})
+
 
 	document.querySelector(".send-button").onclick = () => {
 		let review = {
@@ -50,9 +47,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		// document.querySelector("#reviews-list").append(createReviewHTML(review));
 		addReview(review);
 		// close reviewDlg
-		reviewDlg.classList.remove("visible");
+		closeReviewDlg();
 	}
 });
+
+function closeReviewDlg() {
+	reviewDlg.classList.remove("visible");
+	focusedElementbeforeModal.focus();
+}
 
 function initReviewDialog() {
 	if (usernameTextBox == null || ratingTextBox == null | commentTextBox == null) {
@@ -65,7 +67,43 @@ function initReviewDialog() {
 	ratingTextBox.value = "";
 	commentTextBox.value = "";
 
+	focusedElementbeforeModal = document.activeElement;
+	reviewDlg.addEventListener("keydown", trapTabKey);
+	document.querySelectorAll(".cancel-button").forEach((but) => {
+		but.onclick = closeReviewDlg;
+	})
+
+	var focusableElementsString = 'a[href], area[href], input, select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+	var focusableElements = reviewDlg.querySelectorAll(focusableElementsString);
+	focusableElements = Array.prototype.slice.call(focusableElements);
+	var firstTabStop = focusableElements[0];
+	var lastTabStop = focusableElements[focusableElements.length - 1];
+
 	reviewDlg.classList.add("visible");
+	firstTabStop.focus();
+
+	function trapTabKey(e) {
+		// Check for TAB key press
+		if (e.keyCode === 9) {
+			// SHIFT + TAB = backwards movement
+			if (e.shiftKey) {
+				if(document.activeElement === firstTabStop) {
+					e.preventDefault();
+					lastTabStop.focus();
+				}
+			// TAB = forwards movement
+			} else {
+				if(document.activeElement === lastTabStop) {
+					e.preventDefault();
+					firstTabStop.focus();
+				}
+			}
+		}
+		// ESCAPE = close modal
+		if (e.keyCode === 27) {
+			closeReviewDlg();
+		}
+	}
 }
 
 function addReview(review) {
